@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>AWK empower your comandline</title>
+      <meta name="description" content="awk slides">
+      <meta name="author" content="Juan Diego Godoy Robles">
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+      <!-- favicon icons -->
+      <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+      <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+      <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+      <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+      <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+      <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+      <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+      <link rel="manifest" href="favicon/manifest.json">
+      <meta name="msapplication-TileColor" content="#ffffff">
+      <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+      <meta name="theme-color" content="#ffffff">
+      <!-- end favicon code -->
+      <link rel="stylesheet" href="css/reveal.css">
+      <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+      <!-- Code syntax highlighting -->
+      <link rel="stylesheet" href="lib/css/zenburn.css">
+      <!-- Printing and PDF exports -->
+      <script>
+         var link = document.createElement( 'link' );
+         link.rel = 'stylesheet';
+         link.type = 'text/css';
+         link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+         document.getElementsByTagName( 'head' )[0].appendChild( link );
+      </script>
+      <style>
+         p.alignLeft {
+         text-align: left;
+         }
+         span.orange, a.orange {
+         color: orange;
+         outline-color: gray;
+         }
+         div.awk ul li {
+         margin-bottom:12px;
+         }
+         figcaption {
+         font-size:.8em;
+         }
+         p.miscItems {
+         font-size:1.2em;
+         }
+         .slides section h3 {
+         color: white !important; outline: gray;
+         }
+         .slides img.shortened {
+         max-width: 80%;
+         max-height: 80%;
+         }
+         #upcoming-slide .label {
+         color: #444 !important
+         }
+         ul.credits li {
+         font-size: .6em;
+         }
+      </style>
+      <!-- Note: Make artboard sizes about 775px wide X 445px tall. If the image appears as a vertical navigation, add a class of "shortened" to the image element to reduce its size to 80% -->
+   </head>
+   <body>
+      <div class="reveal awk">
+         <!-- Any section element inside of this container is displayed as a slide -->
+         <div class="slides">
+            <section>
+               <br><br>
+               <h1><span class="black">awk</span></h1>
+               <h2>HackLab Almería</h3>
+               <p>
+                  <small>Created by <a href="https://klashxx.github.io/about">Juan Diego Godoy Robles</a> / <a href="https://github.com/klashxx">@klashxx</a></small>
+               </p>
+            </section>
+
+            <section data-transition="convex">
+               <h2>whoami</h2>
+                  <p class="miscItems">Sysadmin since 2004 &bull; First program AMSTRAD CPC 6128 &bull; StackOverflow &bull; GitHub
+                  </p>
+                   <a href="http://stackoverflow.com/users/story/1200821">
+                   <img  src="media/rasters/awk_rank.png"/>
+                   </a>
+            </section>
+            <section>
+               <h2>awk</h2>
+               <section>
+                  <h3>What??</h3>
+                  <blockquote cite="https://en.wikipedia.org/wiki/AWK">"AWK is a programming language designed for text processing and typically used as a data extraction and reporting tool. It is a standard feature of most Unix-like operating systems." <br/><br/>&mdash; Wikipedia</blockquote>
+               </section>
+               <section>
+                  <h3>What for??</h3>
+                  <blockquote cite="https://en.wikipedia.org/wiki/AWK">"for purposes of extracting or transforming text, such as producing formatted reports. The language extensively uses the string datatype, associative arrays (that is, arrays indexed by key strings), and regular expressions." <br/><br/>&mdash; Wikipedia</blockquote>
+               </section>
+               <section>
+                  <h3>AWKward name ...</h3>
+                  <blockquote cite="https://en.wikipedia.org/wiki/AWK">"its name is derived from the surnames of its authors – Alfred Aho, Peter Weinberger, and Brian Kernighan."</blockquote>
+               </section>
+            </section>
+           <section data-background="media/vectors/innovation_code.svg">
+           <pre><code>
+defmodule Math do
+  def sum(a, b) do
+    a + b
+  end
+end
+            </code></pre>
+            </section>
+            <section>
+               <h1>Thanks!</h1>
+               <section>
+                  <h3>Contact info</h3>
+                  <ul>
+                     <li>Blog: <a class="orange" href="https://klashxx.github.io/">klashxx.github.io</a></li>
+                     <li>Twitter: <a class="orange" href="http://twitter.com/klashxx">@klashxx</a></li>
+                     <li>GitHub for slides: <a class="orange" href="https://github.com/klashxx/awk/slides">github.com/klashxx/awk/slides</a></li>
+                     <li> Email: <a class="orange" href="mailto:klashxx@gmail.com">klashxx@gmail.com</a></li>
+                  </ul>
+               </section>
+               <section>
+                  <h3>Credits</h3>
+                  <ul class="credits">
+                     <li>Slide framework from Reveal JS</li>
+                  </ul>
+               </section>
+            </section>
+         </div>
+      </div>
+      <script src="lib/js/head.min.js"></script>
+      <script src="js/reveal.js"></script>
+      <script>
+         // Full list of configuration options available at:
+         // https://github.com/hakimel/reveal.js#configuration
+         Reveal.initialize({
+          controls: true,
+          progress: true,
+          history: true,
+          center: false,
+          slideNumber: true,
+
+
+          transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+          // Optional reveal.js plugins
+          dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true },
+            { src: 'plugin/notes/notes.js', async: true }
+          ]
+         });
+
+      </script>
+   </body>
+</html>
