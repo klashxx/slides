@@ -79,44 +79,232 @@
             <section>
                <br><br>
                <h1><span class="black">awk</span></h1>
-               <h2>HackLab Almería</h3>
+               <h2>Power for your command line</h3>
                <p>
                   <small>Created by <a href="https://klashxx.github.io/about">Juan Diego Godoy Robles</a> / <a href="https://github.com/klashxx">@klashxx</a></small>
                </p>
             </section>
 
             <section data-transition="convex">
+               <br><br>
                <h2>whoami</h2>
-                  <p class="miscItems">Sysadmin since 2004 &bull; First program AMSTRAD CPC 6128 &bull; StackOverflow &bull; GitHub
+                  <p class="miscItems">Sysadmin since 2004 &bull; First program CPC 6128
                   </p>
                    <a href="http://stackoverflow.com/users/story/1200821">
                    <img  src="media/rasters/awk_rank.png"/>
                    </a>
             </section>
-            <section>
-               <h2>awk</h2>
-               <section>
-                  <h3>What??</h3>
-                  <blockquote cite="https://en.wikipedia.org/wiki/AWK">"AWK is a programming language designed for text processing and typically used as a data extraction and reporting tool. It is a standard feature of most Unix-like operating systems." <br/><br/>&mdash; Wikipedia</blockquote>
-               </section>
-               <section>
-                  <h3>What for??</h3>
-                  <blockquote cite="https://en.wikipedia.org/wiki/AWK">"for purposes of extracting or transforming text, such as producing formatted reports. The language extensively uses the string datatype, associative arrays (that is, arrays indexed by key strings), and regular expressions." <br/><br/>&mdash; Wikipedia</blockquote>
-               </section>
-               <section>
-                  <h3>AWKward name ...</h3>
-                  <blockquote cite="https://en.wikipedia.org/wiki/AWK">"its name is derived from the surnames of its authors – Alfred Aho, Peter Weinberger, and Brian Kernighan."</blockquote>
-               </section>
-            </section>
+          <section>
+             <h2>awk</h2>
+             <section>
+                <h3>What??</h3>
+                <blockquote cite="https://en.wikipedia.org/wiki/AWK">"AWK is a programming language designed for text processing and typically used as a data extraction and reporting tool. It is a standard feature of most Unix-like operating systems." <br/><br/>&mdash; Wikipedia</blockquote>
+             </section>
+             <section>
+                <h3>What for??</h3>
+                <blockquote cite="https://en.wikipedia.org/wiki/AWK">"for purposes of extracting or transforming text, such as producing formatted reports. The language extensively uses the string datatype, associative arrays (that is, arrays indexed by key strings), and regular expressions."<br/><br/>&mdash; Wikipedia</blockquote>
+             </section>
+             <section>
+                <h3>AWKward name ...</h3>
+                <blockquote cite="https://en.wikipedia.org/wiki/AWK">"its name is derived from the surnames of its authors – Alfred Aho, Peter Weinberger, and Brian Kernighan."</blockquote>
+             </section>
+           </section>
+
+          <section>
+             <h2>So awk</h2>
+             <section>
+                <br><br>
+                <h3>Searchs for lines that contain certain patterns</h3>
+                <pre><code>
+            $ awk '/dolor/' lorem_ipsum.dat
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </code></pre>
+             </section>
+             <section>
+                <br>
+                <h3>Data Driven</h3>
+                <h5>describe the data you want to work with and then what action to do when you find it.</h5>
+                <pre><code>
+            $ awk '/dolor/{print $1}' lorem_ipsum.dat
+            Lorem
+                </code></pre>
+             </section>
+           </section>
+             <section data-background="media/vectors/innovation_code.svg">
+             <h2>BEGIN and END</h2>
+             <h3>startup and cleanup actions for awk programs.</h3>
+             <pre><code>
+             BEGIN{
+                 // initialize variables
+             }
+             {
+                 /pattern/ { action }
+             }
+             END{
+                 // cleanup
+             }
+             </code></pre>
+              <h5>Executed once only</h5> 
+              <h5>BEGIN before the first input record is read, END after all the input is consumed.</h5>
+           </section>
            <section data-background="media/vectors/innovation_code.svg">
-           <pre><code>
-defmodule Math do
-  def sum(a, b) do
-    a + b
-  end
-end
-            </code></pre>
+             <h2>Run it</h2>
+             <h4>Short way</h4>
+             <pre><code>
+             awk 'program' input-file1 input-file2
+             
+             cmd | awk 'program'
+             </code></pre>
+             <h4>Long one</h4>
+             <pre><code>
+             awk -f program-file input-file1 input-file2
+             
+             cmd | awk -f program-file
+             </code></pre>
+             <pre><code>
+             #!/bin/awk -f
+             
+             BEGIN { print "hello world!!" }
+             </code></pre>
+           </section>
+
+          <section>
+             <h2>RECORDS and FIELDS</h2>
+             <section>
+                <h3>Records</h3>
+                <ul>
+                <li class="fragment" data-fragment-index="0">Records are separated by a character called the Record Separator RS.</li>
+                <br>
+                <li class="fragment" data-fragment-index="1">By default, the record separator is the unix newline character \n. This is why records are single lines.</li>
+                <br>
+                <li class="fragment" data-fragment-index="2">Additionally awk has ORS Output Record Separator to control the way records are presented to the stdout</li>
+                </ul>
+             </section>
+             <section data-background="media/vectors/innovation_code.svg">
+             <pre><code>
+$ awk 'BEGIN{RS=" *, *";ORS="<<<\n"}{print $0}' lorem_ipsum.dat 
+Lorem ipsum dolor sit amet<<<
+consectetur adipiscing elit.
+Maecenas pellentesque erat vel tortor consectetur condimentum.
+Nunc enim orci<<<
+euismod id nisi eget<<<
+interdum cursus ex.
+Curabitur a dapibus tellus.
+Lorem ipsum dolor sit amet<<<
+consectetur adipiscing elit.
+Aliquam interdum mauris volutpat nisl placerat<<<
+et facilisis neque ultrices.
+<<<
+             </code></pre>
+             </section>
+             <section>
+                <h3>NR and FNR</h3>
+                <ul>
+                <br>
+                <li class="fragment" data-fragment-index="0"> NR: number of input records awk has processed since the beginning of the program’s execution.</li>
+                <br>
+                <li class="fragment" data-fragment-index="1">FNR: current record number in the current file, awk resets FNR to zero each time it starts a new input file.</li>
             </section>
+            <section data-background="media/vectors/innovation_code.svg">
+            <pre><code>
+            $ cat n1.dat 
+            one
+            two
+            </code></pre>
+            <pre><code>
+            $ cat n2.dat 
+            three
+            four
+            </code></pre>
+            <pre><code>
+            $ awk '{print NR,FNR,$0}' n1.dat n2.dat 
+            1 1 one
+            2 2 two
+            3 1 three
+            4 2 four
+            </code></pre>
+          </section>
+        </section>
+
+          <section>
+             <h2>RECORDS and FIELDS</h2>
+             <section>
+                <h3>Fields</h3>
+                <ul>
+                <li class="fragment" data-fragment-index="0">By default, fields are separated by whitespace (any string of one or more spaces, TABs, or newlines), like words in a line.</li>
+                <li class="fragment" data-fragment-index="1">To refer to a field in an awk program, you use a dollar $ sign followed by the number of the field you want.</li>
+                <li class="fragment" data-fragment-index="2">$0 represents the whole input record.</li>
+                <li class="fragment" data-fragment-index="3">NF is a predefined variable it's value is the number of fields in the current record. So, $NF will be always the last field of the record.</li>
+                </ul>
+             </section>
+             <section data-background="media/vectors/innovation_code.svg">
+             <ul>
+             <li class="fragment" data-fragment-index="0">
+             <pre><code>
+$ cat lorem.dat 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Maecenas pellentesque erat vel tortor consectetur condimentum.
+Nunc enim orci, euismod id nisi eget, interdum cursus ex.
+Curabitur a dapibus tellus.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Aliquam mauris volutpat nisl placerat, et facilisis neque ultrices.
+             </code></pre>
+            </li>
+             <li class="fragment" data-fragment-index="1">
+             <pre><code>
+$ awk '{print $1,$NF,NF}' lorem.dat 
+Lorem elit. 8
+Maecenas condimentum. 7
+Nunc ex. 10
+Curabitur tellus. 4
+Lorem elit. 8
+Aliquam ultrices. 9
+             </code></pre>
+             </li>
+             </ul>
+           </section>
+           <section>
+                <li class="fragment" data-fragment-index="0">FS holds the valued of the Field Separator, this value is a single-character string or a regex that matches the separations between fields in an input record.</li>
+                <br>
+                <li class="fragment" data-fragment-index="1">The default value is " ", a string consisting of a single space. As a special exception, this value means that any sequence of spaces, TABs, and/or newlines is a single separator.</li>
+                <br>
+                <li class="fragment" data-fragment-index="2">In the same fashion that ORS we have a OFS variable to manage how our fields are going to be send to the output stream.</li>
+           </section>
+             <section data-background="media/vectors/innovation_code.svg">
+             <ul>
+             <li class="fragment" data-fragment-index="0">
+             <pre><code>
+$ cat group
+nobody:*:-2:
+nogroup:*:-1:
+wheel:*:0:root
+daemon:*:1:root
+kmem:*:2:root
+sys:*:3:root
+tty:*:4:root
+             </code></pre>
+            </li>
+             <li class="fragment" data-fragment-index="1">
+             <pre><code>
+$ awk '!/^(_|#)/&&$1=$1' /
+  FS=":" OFS="<->" group
+nobody<->*<->-2<->
+nogroup<->*<->-1<->
+wheel<->*<->0<->root
+daemon<->*<->1<->root
+kmem<->*<->2<->root
+sys<->*<->3<->root
+tty<->*<->4<->root
+             </code></pre>
+             </li>
+             </ul>
+           </section>
+          </section>
+
+          <section>
+             <h2>Working with arrays</h2>
+           </section>
+
             <section>
                <h1>Thanks!</h1>
                <section>
