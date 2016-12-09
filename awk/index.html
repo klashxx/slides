@@ -271,8 +271,6 @@ Aliquam ultrices. 9
                 <li class="fragment" data-fragment-index="2">In the same fashion that ORS we have a OFS variable to manage how our fields are going to be send to the output stream.</li>
            </section>
              <section data-background="media/vectors/innovation_code.svg">
-             <ul>
-             <li class="fragment" data-fragment-index="0">
              <pre><code>
 $ cat group
 nobody:*:-2:
@@ -283,11 +281,8 @@ kmem:*:2:root
 sys:*:3:root
 tty:*:4:root
              </code></pre>
-            </li>
-             <li class="fragment" data-fragment-index="1">
              <pre><code>
-$ awk '!/^(_|#)/&&$1=$1' /
-  FS=":" OFS="<->" group
+$ awk '!/^(_|#)/&&$1=$1' FS=":" OFS="<->" group
 nobody<->*<->-2<->
 nogroup<->*<->-1<->
 wheel<->*<->0<->root
@@ -296,14 +291,119 @@ kmem<->*<->2<->root
 sys<->*<->3<->root
 tty<->*<->4<->root
              </code></pre>
-             </li>
-             </ul>
            </section>
           </section>
 
           <section>
+            <section>
              <h2>Working with arrays</h2>
+                <li class="fragment" data-fragment-index="0">Arrays are associative, each one is a collection of pairs, index – value, where the any number or string can be an index.</li>
+                <br>
+                <li class="fragment" data-fragment-index="1">No declaration is needed; new pairs can be added at any time.</li>
+                <br>
+                <li class="fragment" data-fragment-index="2">Does not sort arrays by default (PROCINFO)</li>
            </section>
+           <section data-background="media/vectors/innovation_code.svg">
+           <pre><code>
+           awk 'BEGIN{
+                 a[4]="four"
+                 a[1]="one"
+                 a[3]="three"
+                 a[2]="two"
+                 a[0]="zero"
+                 exit
+                 }
+                 END{for (idx in a){
+                        print idx, a[idx]
+                        }
+                 }'
+             </code></pre>
+             <pre><code>
+             4 four
+             0 zero
+             1 one
+             2 two
+             3 three
+             </code></pre>
+           </section>
+          </section>
+          </section>
+
+          <section>
+            <section>
+             <h2>Build-in functions</h2>
+                <li class="fragment" data-fragment-index="0">gsub(regexp, replacement [, target])</li>
+                <br>
+                <li class="fragment" data-fragment-index="1">substr(string, start [, length ])</li>
+                <br>
+                <li class="fragment" data-fragment-index="2">split(string, array [, fieldsep [, seps ] ])</li>
+                <br>
+                <li class="fragment" data-fragment-index="3">index(in, find)</li>
+           </section>
+           <section data-background="media/vectors/innovation_code.svg">
+           <pre><code>
+awk 'gsub(/\./, ",")' lorem.dat
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+Maecenas pellentesque erat vel tortor consectetur condimentum,
+Nunc enim orci, euismod id nisi eget, interdum cursus ex,
+Curabitur a dapibus tellus,
+Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+Aliquam interdum mauris volutpat nisl placerat, et facilisis
+             </code></pre>
+             <br>
+             <pre><code>
+$ awk 'BEGIN{t="hello-world";print index(t, "-")}'
+6
+             </code></pre>
+             <br>
+             <pre><code>
+$ awk 'BEGIN{t="hello-world";print substr(t,index(t, "-")+1)}'
+world
+             </code></pre>
+           </section>
+           <section data-background="media/vectors/innovation_code.svg">
+           <pre><code>
+$ cat passwd
+jd001:x:1032:666:Javier Diaz:/home/jd001:/bin/rbash
+ag002:x:8050:668:Alejandro Gonzalez:/home/ag002:/bin/rbash
+jp003:x:1000:666:Jose Perez:/home/jp003:/bin/bash
+ms004:x:8051:668:Maria Saenz:/home/ms004:/bin/rbash
+rc005:x:6550:668:Rosa Camacho:/home/rc005:/bin/rbash
+             </code></pre>
+             <br>
+             <pre><code>
+$ awk 'n=split($0, a, ":"){print n, a[n]}' passwd
+7 /bin/rbash
+7 /bin/rbash
+7 /bin/bash
+7 /bin/rbash
+7 /bin/rbash
+             </code></pre>
+           </section>
+          </section>
+
+        <section>
+             <h2>Custom functions</h2>
+            
+           <pre><code>
+     awk 'function test(m){
+        return sprintf("This is a test func, parameter: %s", m)
+     }
+     BEGIN{print test("param")}'
+             </code></pre>
+             <br>
+             <pre><code>
+     This is a test func, parameter: param
+             </code></pre>
+              <h5>Parsing by parameter is the only way to make a local variable inside a function.</h5>
+          </section>
+            <section>
+               <br>
+               <br>
+               <br>
+               <br>
+               <h1>DEMO TIME! + Q & A</h1>
+            </section>
 
             <section>
                <h1>Thanks!</h1>
@@ -313,13 +413,7 @@ tty<->*<->4<->root
                      <li>Blog: <a class="orange" href="https://klashxx.github.io/">klashxx.github.io</a></li>
                      <li>Twitter: <a class="orange" href="http://twitter.com/klashxx">@klashxx</a></li>
                      <li>GitHub for slides: <a class="orange" href="https://github.com/klashxx/awk/slides">github.com/klashxx/awk/slides</a></li>
-                     <li> Email: <a class="orange" href="mailto:klashxx@gmail.com">klashxx@gmail.com</a></li>
-                  </ul>
-               </section>
-               <section>
-                  <h3>Credits</h3>
-                  <ul class="credits">
-                     <li>Slide framework from Reveal JS</li>
+                     <li>Email: <a class="orange" href="mailto:klashxx@gmail.com">klashxx@gmail.com</a></li>
                   </ul>
                </section>
             </section>
@@ -337,7 +431,6 @@ tty<->*<->4<->root
           center: false,
           slideNumber: true,
 
-
           transition: 'slide', // none/fade/slide/convex/concave/zoom
 
           // Optional reveal.js plugins
@@ -350,7 +443,6 @@ tty<->*<->4<->root
             { src: 'plugin/notes/notes.js', async: true }
           ]
          });
-
       </script>
    </body>
 </html>
