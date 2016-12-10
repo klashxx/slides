@@ -130,7 +130,7 @@
                 </code></pre>
              </section>
            </section>
-             <section data-background="media/vectors/innovation_code.svg">
+             <section>
              <h2>BEGIN and END</h2>
              <h3>startup and cleanup actions for awk programs.</h3>
              <pre><code>
@@ -147,7 +147,7 @@
               <h5>Executed once only</h5> 
               <h5>BEGIN before the first input record is read, END after all the input is consumed.</h5>
            </section>
-           <section data-background="media/vectors/innovation_code.svg">
+           <section>
              <h2>Run it</h2>
              <h4>Short way</h4>
              <pre><code>
@@ -180,7 +180,7 @@
                 <li class="fragment" data-fragment-index="2">Additionally awk has ORS Output Record Separator to control the way records are presented to the stdout</li>
                 </ul>
              </section>
-             <section data-background="media/vectors/innovation_code.svg">
+             <section>
              <pre><code>
 $ awk 'BEGIN{RS=" *, *";ORS="<<<\n"}{print $0}' lorem_ipsum.dat 
 Lorem ipsum dolor sit amet<<<
@@ -205,7 +205,7 @@ et facilisis neque ultrices.
                 <br>
                 <li class="fragment" data-fragment-index="1">FNR: current record number in the current file, awk resets FNR to zero each time it starts a new input file.</li>
             </section>
-            <section data-background="media/vectors/innovation_code.svg">
+            <section>
             <pre><code>
             $ cat n1.dat 
             one
@@ -237,7 +237,7 @@ et facilisis neque ultrices.
                 <li class="fragment" data-fragment-index="3">NF is a predefined variable it's value is the number of fields in the current record. So, $NF will be always the last field of the record.</li>
                 </ul>
              </section>
-             <section data-background="media/vectors/innovation_code.svg">
+             <section>
              <ul>
              <li class="fragment" data-fragment-index="0">
              <pre><code>
@@ -270,7 +270,7 @@ Aliquam ultrices. 9
                 <br>
                 <li class="fragment" data-fragment-index="2">In the same fashion that ORS we have a OFS variable to manage how our fields are going to be send to the output stream.</li>
            </section>
-             <section data-background="media/vectors/innovation_code.svg">
+             <section>
              <pre><code>
 $ cat group
 nobody:*:-2:
@@ -303,7 +303,7 @@ tty<->*<->4<->root
                 <br>
                 <li class="fragment" data-fragment-index="2">Does not sort arrays by default (PROCINFO)</li>
            </section>
-           <section data-background="media/vectors/innovation_code.svg">
+           <section>
            <pre><code>
            awk 'BEGIN{
                  a[4]="four"
@@ -340,7 +340,7 @@ tty<->*<->4<->root
                 <br>
                 <li class="fragment" data-fragment-index="3">index(in, find)</li>
            </section>
-           <section data-background="media/vectors/innovation_code.svg">
+           <section>
            <pre><code>
 awk 'gsub(/\./, ",")' lorem.dat
 Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -361,7 +361,7 @@ $ awk 'BEGIN{t="hello-world";print substr(t,index(t, "-")+1)}'
 world
              </code></pre>
            </section>
-           <section data-background="media/vectors/innovation_code.svg">
+           <section>
            <pre><code>
 $ cat passwd
 jd001:x:1032:666:Javier Diaz:/home/jd001:/bin/rbash
