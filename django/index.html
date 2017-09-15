@@ -107,15 +107,16 @@
 				<section>
 					<section>
 						<h2 style="color:#0C4B33;">First Fail</h2>
-                        <h3>CMS</h3>
+						<h3>CMS</h3>
+						<aside class="notes">
+							<p>Awesome Django: Wagtail, Django-CMS, Mezzanine, etc: por debajo era magia negra para mi. Me imposibilitaba la adaptación a mis necesidades</p>
+							<p>Zen Django, que se mueve under the hood</p>
+							<p>Django girls y Mozilla</p>
+						</aside>
 					</section>
 					<section data-background="media/nerd.gif">
 						<h1 style="color:white;">Empezar por los basics</h1>
 					</section>
-                    <aside class="notes">
-                        <p>Awesome Django: Wagtail, Django-CMS, Mezzanine, etc: por debajo era magia negra para mi. Me imposibilitaba la adapatación a mis necesidades</p>
-                        <p>Zen Django, que se mueve under the hood: Tutoriales Django girls y Mozilla</p>
-                    </aside>
 				</section>
 
 				<!-- Slice 05 (dev env) -->
@@ -131,12 +132,12 @@
 						    <br>
 							<li class="fragment" data-fragment-index="3">Kubernetes - Docker-Swarm</li>
 						</ul>
+						<aside class="notes">
+							<p>virtualenv: evitaremos al menos romper cosas</p>
+							<p>Clonar un repositorio y lanzar un comando… ya tenemos nuestra web levantada con su *proxy-server* y su *BD* ¿no resulta mágico?</p>
+							<p>¡Pues esa es la idea! Dockerizar y simular el entorno productivo con compose</p>
+						</aside>
 					</section>
-                    <aside class="notes">
-                        <p>virtualenv: evitaremos al menos romper cosas</p>
-                        <p>Clonar un repositorio y lanzar un comando… ya tenemos nuestra web levantada con su *proxy-server* y su *BD* ¿no resulta mágico?</p>
-                        <p>¡Pues esa es la idea! Dockerizar y simular el entorno productivo con compose</p>
-					</aside>
 					<section data-background="media/whale.gif">
 						<h1 style="color:white;">Docker es amor!</h1>
 					</section>
@@ -152,6 +153,12 @@
 							<li>SQLite</li>
 							<li>Oracle</li>
 						</ul>
+						<aside class="notes">
+							<ul>
+								<li>Primeros experimentos nos vale SQLite</li>
+								<li>Entornos productivos cualquiera de las otras tres opciones</li>
+							</ul>
+					     </aside>
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
 						<h2>Go for PostgreSQL !</h1>
@@ -178,11 +185,13 @@
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
 						<h3>Decouple</h3>
+						<h6>.env</h6>
 						<pre>
 							<code data-trim data-noescape>
 							SECRET_KEY=#^p^js0g91jhtarws6bp7s@r&988%%n_ok6#b)q=3s1v8-(si$
 							</code>
 						</pre>
+						<h6>settings.py</h6>
 						<pre>
 							<code data-trim data-noescape>
 							from decouple import config
@@ -192,11 +201,13 @@
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
 						<h3>DJ DATABASE URL</h3>
+						<h6>.env</h6>
 						<pre>
 							<code data-trim data-noescape>
 								DB_URL=postgresql://postgres:postgres@postgres:5432/postgres
 							</code>
 						</pre>
+						<h6>settings.py</h6>
 						<pre>
 							<code data-trim data-noescape>
 								DATABASES = {
