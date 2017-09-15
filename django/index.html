@@ -366,6 +366,49 @@
 					</section>
 				</section>
 
+				<!-- Slice 09 (urls.py) -->
+				<section>
+					<section>
+						<h2 style="color:#0C4B33; text-transform: lowercase;">urls.py</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Regexp</li>
+							<br>
+							<li class="fragment" data-fragment-index="1">Modular</li>
+						</ul>
+						<aside class="notes">
+							<p>El enrutamiento se basa en expresiones regulares.</p>
+							<p>Cuando llamamos a una url, Django en primer usa el urls.py de la raíz del proyecto y a partir de ahí tratara de resolverla.</p>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+						<h6>root</h6>
+						<pre>
+							<code data-trim data-noescape>
+							urlpatterns = [
+								url(r'^', include('apps.core.urls', namespace='core')),
+								url(r'^account/', include('account.urls'), name='Autenticación'),
+								url(r'^metrics/', include('apps.metrics.urls'), name='Métricas'),
+								url(r'^manager/', include('apps.manager.urls'), name='Manager'),
+								url(r'^admin/', admin.site.urls),
+								]
+							</code>
+						</pre>
+						<h6>core</h6>
+						<pre>
+							<code data-trim data-noescape>
+							urlpatterns = [
+								url(r'^$', views.Home.as_view(), name='home'),
+								]
+							</code>
+						</pre>
+						<aside class="notes">
+							<h3>¿Que pasa si introducimos nuestro dominio a secas?</h3>
+							<p>Django recorrerá las cinco regex que tenemos parametrizadas, determinara que la que única que cumple el patrón es la primera, donde le indicamos que cargue las urls de la aplicación core</p>
+							<p>Solo tenemos un patrón contemplado la cadena vacia, que enrutaremos hacia la vista HOME de CORE.</p>
+						</aside>
+					</section>
+				</section>
+
 				<!-- Slice  -->
 				<section data-background="media/bye.gif">
 					<h1 style="color:white;">¡Muchas Gracias!</h1>
