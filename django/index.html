@@ -32,34 +32,31 @@
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
 	</head>
 
 	<body>
 
 		<div class="reveal">
 			<div class="slides">
-				<!-- Slice 1 -->
+				<!-- Slice 00 (title) -->
 				<section>
 					<h2 style="color:#0C4B33;">Django VS Sysadmin</h2>
 					<h3>PyConES, Septiembre 2017, Cáceres</h3>
 				</section>
 
-				<!-- Slice 2 -->
+				<!-- Slice 01 (demo ref) -->
 				<section>
-				   <h2 style="color:#0C4B33;">Demo</h2>
-				   <p>
-						<a href="https://github.com/klashxx/PyConES2017" style="font-family:courier;">https://github.com/klashxx/PyConES2017</a>
-				   </p>
+				   <h2 style="color:#0C4B33;">Pruébalo</h2>
+				   <p><a href="https://github.com/klashxx/PyConES2017" style="font-family:courier;">https://github.com/klashxx/PyConES2017</a></p>
 				   <ul>
 					   <li>Estructurada en ramas</li>
 					   <li>Incremental</li>
+                       <li>Docker</li>
 				   </ul>
+
 				</section>
 
-				<!-- Slice 3 -->
+				<!-- Slice 02 (contact info) -->
 				<section>
 				    <section>
 				    	<h2 style="color:#0C4B33;">Autobombo</h2>
@@ -70,11 +67,15 @@
 						<p><a href="https://klashxx.github.io/about" style="font-family:courier;">https://klashxx.github.io/about</a></p>
 					</section>
 					<section data-background="media/web-experience.gif">
-					   <h1 style="color:white;">Web experience = 0</h1>
+					    <h1 style="color:white;">Web Experience = 0</h1>
+					    <aside class="notes">
+						Motivación ¿Vountario?
+				        </aside>
 					</section>
+
 				</section>
 
-				<!-- Slice 4 -->
+				<!-- Slice 03 (why Django?) -->
 				<section>
 					<section>
 						<h2 style="color:#0C4B33;">¿Por qué Django?</h2>
@@ -87,15 +88,63 @@
 						    <br>
 							<li class="fragment" data-fragment-index="3">Extesible</li>
 						    <br>
-						    <li class="fragment" data-fragment-index="4">DRF</li>
+						    <li class="fragment" data-fragment-index="4">DRF y otras hierbas</li>
 						</ul>
+						<aside class="notes">
+							<ul>
+								<li>Python: mejor lenguaje para administrar sistemas.</li>
+								<li>Fiable: GitHub Starts, comunidad, webs en producción.</li>
+								<li>ORM: modelos con persistencia</li>
+								<li>Extensible: acoplar nuevas apps aprovechando una infraestructura común (autenticación, plantillas, etc)</li>
+							</ul>
+						</aside>
 					</section>
 					<section data-background="media/win.gif">
 						<h1 style="color:white;">Win or Win</h1>
 					</section>
 				</section>
 
-				<!-- Slice 5 -->
+				<!-- Slice 04 (first fail) -->
+				<section>
+					<section>
+						<h2 style="color:#0C4B33;">First Fail</h2>
+                        <h3>CSM</h3>
+					</section>
+					<section data-background="media/nerd.gif">
+						<h1 style="color:white;">Empezar por los basics</h1>
+					</section>
+                    <aside class="notes">
+                        <p>Awesome Django: Wagtail, Django-CMS, Mezzanine, etc: por debajo era magia negra para mi. Me imposibilitaba la adapatación a mis necesidades</p>
+                        <p>Zen Django, que se mueve under the hood: Tutoriales Django girls y Mozilla</p>
+                    </aside>
+
+				</section>
+
+				<!-- Slice 05 (dev env) -->
+				<section>
+					<section>
+						<h2 style="color:#0C4B33;">Desarrollo</h2>
+						<ul>
+						    <li class="fragment" data-fragment-index="0">virtualenv</li>
+						    <br>
+						    <li class="fragment" data-fragment-index="1">Docker</li>
+						    <br>
+						    <li class="fragment" data-fragment-index="2">docker-compose</li>
+						    <br>
+							<li class="fragment" data-fragment-index="3">Kubernetes - Docker-Swarm</li>
+						</ul>
+					</section>
+                    <aside class="notes">
+                        <p>virtualenv: evitaremos al menos romper cosas</p>
+                        <p>Clonar un repositorio y lanzar un comando… ya tenemos nuestra web levantada con su *proxy-server* y su *BD* ¿no resulta mágico?</p>
+                        <p>¡Pues esa es la idea! Dockerizar y simular el entorno productivo con compose</p>
+					</aside>
+					<section data-background="media/whale.gif">
+						<h1 style="color:white;">Docker es amor!</h1>
+					</section>
+				</section>
+
+				<!-- Slice 06 (databases) -->
 				<section>
 					<section>
 						<h2 style="color:#0C4B33;">Databases</h2>
@@ -108,6 +157,55 @@
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
 						<h2>Go for PostgreSQL !</h1>
+					</section>
+				</section>
+
+				<!-- Slice 07 (conf) -->
+				<section>
+					<section>
+                        <h2 style="color:#0C4B33; text-transform: lowercase;">settings.py y .env</h2>
+						<ul>
+						    <li class="fragment" data-fragment-index="0">Configuración</li>
+						    <br>
+						    <li class="fragment" data-fragment-index="1">Ocultar los secretos</li>
+						    <br>
+						    <li class="fragment" data-fragment-index="2">Variables globales</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>Configuración global de nuestro proyecto, similar a profile  bash</li>
+								<li>Crítico</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+						<h3>Decouple</h3>
+						<pre>
+							<code data-trim data-noescape>
+							SECRET_KEY=#^p^js0g91jhtarws6bp7s@r&988%%n_ok6#b)q=3s1v8-(si$
+							</code>
+						</pre>
+						<pre>
+							<code data-trim data-noescape>
+							from decouple import config
+							SECRET_KEY = config('SECRET_KEY')
+							</code>
+						</pre>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+						<h3>DJ DATABASE URL</h3>
+						<pre>
+							<code data-trim data-noescape>
+								DB_URL=postgresql://postgres:postgres@postgres:5432/postgres
+							</code>
+						</pre>
+						<pre>
+							<code data-trim data-noescape>
+								DATABASES = {
+								'default': dj_database_url.config(default=config('DB_URL')),
+								}
+							</code>
+						</pre>
 					</section>
 				</section>
 
