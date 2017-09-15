@@ -35,7 +35,6 @@
 	</head>
 
 	<body>
-
 		<div class="reveal">
 			<div class="slides">
 				<!-- Slice 00 (title) -->
@@ -108,7 +107,7 @@
 				<section>
 					<section>
 						<h2 style="color:#0C4B33;">First Fail</h2>
-                        <h3>CSM</h3>
+                        <h3>CMS</h3>
 					</section>
 					<section data-background="media/nerd.gif">
 						<h1 style="color:white;">Empezar por los basics</h1>
@@ -117,7 +116,6 @@
                         <p>Awesome Django: Wagtail, Django-CMS, Mezzanine, etc: por debajo era magia negra para mi. Me imposibilitaba la adapatación a mis necesidades</p>
                         <p>Zen Django, que se mueve under the hood: Tutoriales Django girls y Mozilla</p>
                     </aside>
-
 				</section>
 
 				<!-- Slice 05 (dev env) -->
@@ -206,6 +204,154 @@
 								}
 							</code>
 						</pre>
+					</section>
+				</section>
+
+				<!-- Slice 08 (second fail) -->
+				<section>
+					<section>
+						<h2 style="color:#0C4B33;">Second Fail</h2>
+						<h3>La estructura del proyecto</h3>
+					</section>
+					<section data-transition="slide" data-background-transition="zoom">
+						<h3>DOCS</h3>
+						<pre>
+							<code data-trim>
+							mysite/
+							    manage.py
+							    mysite/
+							    	__init__.py
+							    	settings.py
+							    	urls.py
+							    	wsgi.py
+							    polls/
+							    	__init__.py
+							    	admin.py
+							    	migrations/
+							    		__init__.py
+							    		0001_initial.py
+							    	models.py
+							    	static/
+							    		polls/
+							    			images/
+							    				background.gif
+							    			style.css
+							    	templates/
+							    		polls/
+							    			detail.html
+							    			index.html
+							    			results.html
+							    	tests.py
+							    	urls.py
+							    	views.py
+							    templates/
+							    	admin/
+							    		base_site.html
+							</code>
+						</pre>
+						<aside class="notes">
+							<p>El proyecto (a partir de ahora sysgate) empezó con dos apps:</p>
+							<ul>
+								<li>Gestión de la autenticación (usuarios y grupos)</li>
+								<li>La aplicación en si (llamémosla metrics)</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background-transition="zoom">
+						<h3>First try</h3>
+						<pre>
+							<code data-trim>
+							sysgate/
+							    manage.py
+							    sysgate/
+							    	__init__.py
+							    	settings.py
+							    	urls.py
+							    	wsgi.py
+							    account/
+							    	__init__.py
+							    	…
+							    metrics/
+							    	__init__.py
+							    	…
+							    templates/
+							    	account/
+							    		login.html
+							    	metrics/
+							    		home.html
+							</code>
+						</pre>
+						<aside class="notes">
+							<p>Problema: Añadir una nueva aplicación x y mantener HOME común: apps disponibles en función de permisos.</p>
+							<ul>
+								<li>¿En account?: no, se trata de separar funcionalidades y esta aplicación tiene un propósito único especifico que es la gestión de usuarios.</li>
+								<li>¿En metrics?: no way, esto nos obligaría a duplicar el código en x, o lo que es peor usar una vista de metrics.</li>
+							</ul>
+							<p>Solución: creación de una aplicación CORE, donde agrupar las funcionalidades comunes que puedan ser llamadas desde cualquier otra aplicación.</p>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+						<h3>F*CK YEAH</h3>
+						<pre>
+							<code data-trim>
+                            sysgate/
+                                manage.py
+                                sysgate/
+                                    __init__.py
+                                    settings.py
+                                    urls.py
+                                    wsgi.py
+                                    routers.py
+                                    account/
+                                        __init__.py
+                                        ...
+                                    apps/
+                                        __init__.py
+                                        core/
+                                            templatetags/
+                                                __init__.py
+                                                core_tags.py
+                                            templates/
+                                                core/
+                                                    home.html
+                                                    ...
+                                            __init__.py
+                                            ...
+                                        metrics/
+                                            templates/
+                                                metrics/
+                                                    home.html
+                                                    ...
+                                            __init__.py
+                                            ...
+                                        manager/
+                                            templates/
+                                                manager/
+                                                    home.html
+                                                    ...
+                                            __init__.py
+                                            ...
+                                    static/
+                                        ...
+                                    fixtures/
+                                        ...
+                                    templates/
+                                        account/
+                                            login.html
+                                            ...
+                                        base.html
+							</code>
+						</pre>
+						<aside class="notes">
+							<p>La vista home, se renderizará a partir de la plantilla core ¿make sense?</p>
+							<ul>
+								<li>Añadir aplicaciones de forma indefinida aprovechando la infraestructura común expuesta por ACCOUNT y CORE.</li>
+								<li>Permite trabajar independientemente en cualquier app sin temor a romper nada</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-background="media/productivity.gif">
+						<h1 style="color:white;">PRODUCTIVITY BOOST</h1>
 					</section>
 				</section>
 
