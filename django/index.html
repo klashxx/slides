@@ -409,6 +409,83 @@
 					</section>
 				</section>
 
+				<!-- Slice 10 (models and views) -->
+				<section>
+					<section>
+						<h2 style="color:#0C4B33;">Modelos y vistas …¿Dónde está el controlador?</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Framework «MTV». «Model», «Template» y «View»</li>
+						</ul>
+						<aside class="notes">
+							<p>En la práctica nos basta con saber:</p>
+							<ul>
+								<li>Diseñar los modelos.</li>
+								<li>Programar las vistas y su template.</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background-transition="zoom">
+						<h2 style="color:#0C4B33; text-transform: lowercase;">models.py</h2>
+						<ul>
+							<li>Clase cuyos objetos instanciados están dotados de persistencia en BD</li>
+						</ul>
+						<aside class="notes">
+							<p>Un modelo se traduce en una tabla cuyos campos se mapean con las variables de la clase.</p>
+							<p>Diseñarlos requiere pensar detenidamente en los datos que se desean representar.</p>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+						<h2>TIPS</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">managed = False</li>
+							<br>
+							<li class="fragment" data-fragment-index="1">Campo único</li>
+						</ul>
+						<aside class="notes">
+							<p>Por defecto Django crea las tablas mediante las migrations, pero podemos establecer que el modelo no sea manejado e incorporar una tabla preexistente al ecosistema, es una  forma de integrar datos provenientes de aplicaciones externas, y se nos proporcionan utilidades para inspeccionar el modelo.</p>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background-transition="zoom">
+						<h2 style="color:#0C4B33; text-transform: lowercase;">views.py</h2>
+						<ul>
+							<li>Extraer datos de nuestros models.py</li>
+							<li>NO necesitamos SQL</li>
+						</ul>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+						<h2>TIPS</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Class Based Views</li>
+						</ul>
+						<aside class="notes">
+							<p>Pueden parecer más complicadas pero a largo plazo compensa su aprendizaje por la potencia que ofrecen</p>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background-transition="zoom">
+						<h2 style="color:#0C4B33; text-transform: lowercase;">template.html</h2>
+						<ul>
+							<li>Representa los datos extraidos por la vista</li>
+						</ul>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					    <pre>
+						    <code data-trim>
+								<h1>Metrics App</h1>
+								<p>Bienvenid@ <strong>{{ request.user }}</strong></p>
+								<p>Disponibles:</p>
+								<table style="border: 1px solid black;">
+								{% for metrica in metricas %}
+								  <tr>
+									<td>{{ metrica.nombre }}</td>
+									<td>{{ metrica.get_tipo_display }}</td>
+								  </tr>
+								{% endfor %}
+								</table>
+						    </code>
+					    </pre>
+					</section>
+				</section>
+
 				<!-- Slice  -->
 				<section data-background="media/bye.gif">
 					<h1 style="color:white;">¡Muchas Gracias!</h1>
