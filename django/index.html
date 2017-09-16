@@ -21,7 +21,7 @@
 		<link rel="stylesheet" href="css/theme/white.css" id="theme">
 
 		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/dracula.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -457,17 +457,6 @@
 						<ul>
 							<li>Class Based Views</li>
 						</ul>
-						<pre>
-							<code data-trim data-noescape>
-								class Home(View):
-								    def get(self, request, *args, **kwargs):
-									  metricas = Metrica.objects.all().order_by('tipo')
-									  return render(
-										  request,
-										  'metrics/home.html',
-										  context={'metricas': metricas})
-							</code>
-						</pre>
 						<aside class="notes">
 							<p>Pueden parecer más complicadas pero a largo plazo compensa su aprendizaje por la potencia que ofrecen</p>
 						</aside>
