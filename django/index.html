@@ -68,10 +68,9 @@
 					<section data-background="media/web-experience.gif">
 					    <h1 style="color:white;">Web Experience = 0</h1>
 					    <aside class="notes">
-						Motivación ¿Vountario?
+						Motivación ¿Voluntario?
 				        </aside>
 					</section>
-
 				</section>
 
 				<!-- Slide 03 (why Django?) -->
@@ -684,6 +683,60 @@
 					</section>
 					<section data-background="media/sunglasses.gif">
 						<h1 style="color:white;">CUTE!</h1>
+					</section>
+				</section>
+
+				<!-- Slide 14 (bootstrap / js) -->
+				<section>
+					<section>
+						<h2>Y esto ...</h2>
+						<h2>¿cómo se ve en el móvil?</h2>
+					</section>
+					<section data-background="media/olakase.gif">
+						<h1 style="color:white;">¿OLA K ASE?</h1>
+					</section>
+					<section>
+						<h2>Mejorando el FRONTEND</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Bootstrap</li>
+							<br>
+							<li class="fragment" data-fragment-index="1">Javascript</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>Bootstrap es un framework web basado principalmente en HTML y CSS que mejora (o hace más vistosos) los elementos que incluimos en nuestros templates, además permite que nuestras paginas sean responsive sin demasiada dificultad (Sistema en grid)</li>
+								<li>Javascript es un lenguaje que tiene la gran ventaja de poder ejecutarse en el navegador. Existen innumerables librerías .js muchas de ellas super cool, que nos permiten hacer verdaderas viguerías con los datos devueltos por nuestro Backend, no debemos convertirnos en talibanes del lenguaje, JS es una utilidad imprescindible en el Frontend.</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<pre>
+							<code data-trim>
+							var v = new Vue({
+							  delimiters: ['[[', ']]'],
+							  el: '#container',
+							  data: {
+								metricas: []
+							  },
+							  mounted: function(){
+								$.get('/metrics/api/v1/metricas/', function(data){
+								  v.metricas = data;
+								})}
+							})
+							</code>
+						</pre>
+						<pre>
+							<code data-trim>
+							<table>
+							  <tbody>
+								<tr v-for="metrica in metricas">
+								  <td>[[ metrica.nombre ]]</td>
+								  <td>[[ metrica.long_tipo ]]</td>
+								</tr>
+							  </tbody>
+							</table>
+							</code>
+						</pre>
 					</section>
 				</section>
 
