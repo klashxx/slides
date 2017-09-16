@@ -740,6 +740,43 @@
 					</section>
 				</section>
 
+				<!-- Slide 15 (permissions) -->
+				<section>
+					<section>
+						<h2>Permisos</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Templates</li>
+							<br>
+							<li class="fragment" data-fragment-index="1">Views</li>
+							<br>
+							<li class="fragment" data-fragment-index="2">Serializers</li>
+						</ul>
+					</section>
+					<section>
+						<pre>
+							<code data-trim>
+							@method_decorator(login_required, name='dispatch')
+							class Home(UserPassesTestMixin, View):
+								def test_func(self):
+									return super_o_esta_en_grupo(self.request.user,
+																 grupo='pycones')
+								def get(self, request, *args, **kwargs):
+									return render(request, 'metrics/home.html')
+							</code>
+						</pre>
+						<pre>
+							<code data-trim>
+							class EsSuperOTienePermisosPorGrupo(BasePermission):
+							    def has_permission(self, request, view):
+							    	gr_auth_map = getattr(view, 'grupos_autorizados', {})
+							    	gr_auth = gr_auth_map.get(request.method, [])
+							    	return any([super_o_esta_en_grupo(request.user, grupo)
+							    	            for grupo in gr_auth])
+							</code>
+						</pre>
+					</section>
+				</section>
+
 				<!-- Slide  -->
 				<section data-background="media/bye.gif">
 					<h1 style="color:white;">¡Muchas Gracias!</h1>
