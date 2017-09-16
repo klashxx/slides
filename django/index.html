@@ -603,6 +603,90 @@
 					</section>
 				</section>
 
+				<!-- Slide 13 (frontend) -->
+				<section>
+					<section>
+						<h2>Frontend (Templating)</h2>
+						<pre>
+							<code data-trim data-noescape>
+							├── account
+							├── apps
+							│   ├── core
+							│   │   ├── templates
+							│   │   │   └── core
+							│   │   │       └── home.html
+							│   │   ├── templatetags
+							│   │   │   └── core_tags.py
+							│   └── metrics
+							│       ├── templates
+							│       │   └── metrics
+							│       │       └── home.html
+							├── templates
+							│   ├── account
+							│   │   └── login.html
+							│   └── base.html
+							</code>
+						</pre>
+						<aside class="notes">
+					 		<ul>
+								 <li>Base del Frontend y la tercera pata del MVT: HTML + JS ,etc</li>
+								 <li>Muy inteligente, teniendo en cuenta que Django no esta enfocado a la construcción de single-page applications</li>
+								 <li>Cada app tendrá sus propios templates encargados de renderizar los datos proporcionados por la vista que invoca o extraídos directamente desde la API.</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<h2>Conceptos</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">Herencia</li>
+							<br>
+							<li class="fragment" data-fragment-index="1">Lenguaje</li>
+							<br>
+							<li class="fragment" data-fragment-index="2">Custom Tags y Filtros</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>La herencia (se podría comparar con las Clases) permite extender y modificar la plantilla heredada conelementos básicos y el look and feel de nuestra web. (DRY).</li>
+								<li>Sintaxis propia que nos permite expresarnos en el template de un modo programático proporcionándonos una enorme versatilidad.</li>
+								<li>Los tags y filtros nos permiten incorporar código Python y usarlo en plantillas</li>
+							</ul>
+						</aside>
+					</section>
+					<section>
+						<pre>
+							<code data-trim data-noescape>
+							from django import template
+							register = template.Library()
+
+							@register.filter('en_grupo')
+							def en_grupo(user, group_name):
+								groups = user.groups.all().values_list('name', flat=True)
+								return True if group_name in groups else False
+							</code>
+						</pre>
+						<pre>
+							<code data-trim>
+							{% extends 'base.html' %}
+							{% load core_tags %}
+							{% block content %}
+
+							{% if request.user|en_grupo:"pycones" or user.is_superuser %}
+								<h1>Metrics</h1>
+								<a class="btn" href="{% url 'metrics:home' %}">Acceder</a>
+							{% endif %}
+
+							{% if not user.is_authenticated %}
+							    <button type="button" class="close"></button>Longin
+							{% endif %}
+							{% endblock %}
+							</code>
+						</pre>
+					</section>
+					<section data-background="media/sunglasses.gif">
+						<h1 style="color:white;">CUTE!</h1>
+					</section>
+				</section>
+
 				<!-- Slide  -->
 				<section data-background="media/bye.gif">
 					<h1 style="color:white;">¡Muchas Gracias!</h1>
