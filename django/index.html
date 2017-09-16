@@ -752,7 +752,7 @@
 							<li class="fragment" data-fragment-index="2">Serializers</li>
 						</ul>
 					</section>
-					<section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
 						<pre>
 							<code data-trim>
 							@method_decorator(login_required, name='dispatch')
@@ -775,6 +775,24 @@
 							</code>
 						</pre>
 					</section>
+				</section>
+
+				<!-- Slide 16 (deploy) -->
+				<section>
+					<h2>Deploy</h2>
+						<ul>
+							<li class="fragment" data-fragment-index="0">NGINX</li>
+							<br>
+							<li class="fragment" data-fragment-index="1">Gunicorn</li>
+							<br>
+							<li class="fragment" data-fragment-index="2">Docker</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>NGINX se encargará de se servir el contenido estático y mediante un proxyserver redireccionará las peticiones de contenido dinámico a la url servida por el servidor WSGI</li>
+							<li>Necesitamos un servidor Python que será el que mueva nuestro código, mi elegido es Gunicorn</li>
+						</ul>
+					</aside>
 				</section>
 
 				<!-- Slide  -->
