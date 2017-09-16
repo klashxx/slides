@@ -455,8 +455,19 @@
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
 						<h2>TIPS</h2>
 						<ul>
-							<li class="fragment" data-fragment-index="0">Class Based Views</li>
+							<li>Class Based Views</li>
 						</ul>
+						<pre>
+							<code data-trim data-noescape>
+								class Home(View):
+								    def get(self, request, *args, **kwargs):
+									  metricas = Metrica.objects.all().order_by('tipo')
+									  return render(
+										  request,
+										  'metrics/home.html',
+										  context={'metricas': metricas})
+							</code>
+						</pre>
 						<aside class="notes">
 							<p>Pueden parecer más complicadas pero a largo plazo compensa su aprendizaje por la potencia que ofrecen</p>
 						</aside>
