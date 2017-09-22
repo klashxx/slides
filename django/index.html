@@ -54,8 +54,9 @@
 				   </ul>
 					<aside class="notes">
 						<ul>
+                            <li>Buenos dias! Gracias por el madrugón!</li>
 							<li>ABRIR Github en otra pestaña</li>
-                            <li>ABRIR sysgate http://0.0.0.0</li>
+                            <li>ABRIR sysgate: <a href="http://0.0.0.0">http://0.0.0.0</a></li>
 							<li>Instalación NO es necesaria, pero es un buen complemento</li>
 						</ul>
 					</aside>
@@ -77,6 +78,8 @@
 						    <ul>
 						    	<li>SOLO Jinja para mails, y experimentos en Flask</li>
 						    	<li>Voluntario, aprovechar la oportunidad para aprender</li>
+                                <li>Objetivo: compartir mi experiencia, lo que me sirvió y lo que no</li>
+                                <li>NO TUTORIAL</li>
 						    </ul>
 				        </aside>
 					</section>
@@ -121,7 +124,7 @@
 						<h3>CMS</h3>
 						<aside class="notes">
                             <ul>
-                                <li>CMS:  Content Management System = sistema de gestión de contenidos</li>
+                                <li>CMS: Content Management System = sistema de gestión de contenidos</li>
                                 <li>Awesome Django: Wagtail, Django-CMS, Mezzanine, etc</li>
                                 <li>Magia negra, "imposible" adaptación</li>
                                 <li>Zen Django: que se mueve under the hood</li>
@@ -285,10 +288,10 @@
 							</code>
 						</pre>
 						<aside class="notes">
-							<p>El proyecto (a partir de ahora sysgate) empezó con dos apps:</p>
 							<ul>
-								<li>Gestión de la autenticación (usuarios y grupos)</li>
-								<li>La aplicación en si (llamémosla metrics)</li>
+                                <li>SYSGATE (repo): dos apliciones</li>
+								<li>account: Gestión de la autenticación (usuarios y grupos)</li>
+								<li>metrics: La aplicación en sí</li>
 							</ul>
 						</aside>
 					</section>
@@ -317,12 +320,13 @@
 							</code>
 						</pre>
 						<aside class="notes">
-							<p>Problema: Añadir una nueva aplicación x y mantener HOME común: apps disponibles en función de permisos.</p>
 							<ul>
+                                <li>Problema: Añadir una nueva aplicación "manager" y mantener HOME común</li>
+                                <li>Dashboard compartido con Apps disponibles en función de permisos.</li>
 								<li>¿En account?: no, se trata de separar funcionalidades y esta aplicación tiene un propósito único especifico que es la gestión de usuarios.</li>
-								<li>¿En metrics?: no way, esto nos obligaría a duplicar el código en x, o lo que es peor usar una vista de metrics.</li>
+								<li>¿En metrics?: no way, implica duplicar el código en "manager", o lo que es peor usar una vista de metrics.</li>
+                                <li>Solución: app CORE, donde agrupar funcionalidades/utildades comunes</li>
 							</ul>
-							<p>Solución: creación de una aplicación CORE, donde agrupar las funcionalidades comunes que puedan ser llamadas desde cualquier otra aplicación.</p>
 						</aside>
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
@@ -378,10 +382,11 @@
 							</code>
 						</pre>
 						<aside class="notes">
-							<p>La vista home, se renderizará a partir de la plantilla core ¿make sense?</p>
 							<ul>
-								<li>Añadir aplicaciones de forma indefinida aprovechando la infraestructura común expuesta por ACCOUNT y CORE.</li>
-								<li>Permite trabajar independientemente en cualquier app sin temor a romper nada</li>
+                                <li>La vista HOME (dashborad) se renderizará a partir de la plantilla de core ¿make sense?</li>
+								<li>Ventaja: Añadir aplicaciones de forma indefinida aprovechando la infraestructura común expuesta por ACCOUNT y CORE.</li>
+								<li>Ventaja: Permite trabajar independientemente en cualquier app sin temor a romper nada</li>
+                                <li>Ventaja: Incremento de la productividad</li>
 							</ul>
 						</aside>
 					</section>
@@ -400,8 +405,11 @@
 							<li class="fragment" data-fragment-index="1">Modular</li>
 						</ul>
 						<aside class="notes">
-							<p>El enrutamiento se basa en expresiones regulares.</p>
-							<p>Cuando llamamos a una url, Django en primer usa el urls.py de la raíz del proyecto y a partir de ahí tratara de resolverla.</p>
+                            <ul>
+                                <li>Basado en expresiones regulares: uno de los puntos fuertes de Django</li>
+                                <li>Llamada a URL: Primer paso = urls.py de la raíz del proyecto</li>
+                                <li>Segundo paso: urls.py de app. Modular</li>
+                            </ul>
 						</aside>
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
@@ -426,10 +434,16 @@
 							</code>
 						</pre>
 						<aside class="notes">
-							<h3>¿Que pasa si introducimos nuestro dominio a secas?</h3>
-							<p>Django recorrerá las cinco regex que tenemos parametrizadas, determinara que la que única que cumple el patrón es la primera, donde le indicamos que cargue las urls de la aplicación core</p>
-							<p>Solo tenemos un patrón contemplado la cadena vacia, que enrutaremos hacia la vista HOME de CORE.</p>
+                            <ul>
+                                <li>Introducimos solo dominio: <a href="http://0.0.0.0">http://0.0.0.0</a></li>
+                                <li>Recorrerá las cinco regex que tenemos parametrizada en la raíz</li>
+                                <li>Solo cumple el primer patrón</li>
+                                <li>Carga urls.py de core que contempla cadena vacia y enrutaremos hacia la vista HOME de CORE</li>
+                            </ul>
 						</aside>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+						<h2>BE MODULAR MY FRIEND</h1>
 					</section>
 				</section>
 
@@ -441,10 +455,11 @@
 							<li class="fragment" data-fragment-index="0">Framework «MTV». «Model», «Template» y «View»</li>
 						</ul>
 						<aside class="notes">
-							<p>En la práctica nos basta con saber:</p>
 							<ul>
-								<li>Diseñar los modelos.</li>
-								<li>Programar las vistas y su template.</li>
+                                <li>En la práctica: TRES elementos</li>
+								<li>Diseñar los modelos</li>
+								<li>Programar las vistas</li>
+                                <li>Templating</li>
 							</ul>
 						</aside>
 					</section>
@@ -454,8 +469,11 @@
 							<li>Clase cuyos objetos instanciados están dotados de persistencia en BD</li>
 						</ul>
 						<aside class="notes">
-							<p>Un modelo se traduce en una tabla cuyos campos se mapean con las variables de la clase.</p>
-							<p>Diseñarlos requiere pensar detenidamente en los datos que se desean representar.</p>
+                            <ul>
+                                <li>En BD: tabla cuyos campos se mapean con las variables de la clase</li>
+                                <li>Pensar detenidamente en los datos que se desean representar</li>
+                                <li>Evitar alterarlos: complicaciones en migraciones</li>
+                            </ul>
 						</aside>
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
@@ -466,13 +484,17 @@
 							<li class="fragment" data-fragment-index="1">Primary Key única</li>
 						</ul>
 						<aside class="notes">
-							<p>Por defecto Django crea las tablas mediante las migrations, pero podemos establecer que el modelo no sea manejado e incorporar una tabla preexistente al ecosistema, es una  forma de integrar datos provenientes de aplicaciones externas, y se nos proporcionan utilidades para inspeccionar el modelo.</p>
+                            <ul>
+                                <li>Por defecto crea las tablas mediante las migrations</li>
+                                <li>managed=False lo evita: incorporar tablas externas para explotarlas en modo lectura</li>
+                                <li>Problemas con PKs múltiples. Usar GUID</li>
+                            </ul>
 						</aside>
 					</section>
 					<section data-transition="slide" data-background-transition="zoom">
 						<h2 style="color:#0C4B33; text-transform: lowercase;">views.py</h2>
 						<ul>
-							<li>Extraer datos de nuestros models.py</li>
+							<li>Extraer datos de nuestros Modelos</li>
 							<li>NO necesitamos SQL</li>
 						</ul>
 					</section>
@@ -482,7 +504,10 @@
 							<li>Class Based Views</li>
 						</ul>
 						<aside class="notes">
-							<p>Pueden parecer más complicadas pero a largo plazo compensa su aprendizaje por la potencia que ofrecen</p>
+                            <ul>
+                                <li>Son el futuro / presente</li>
+                                <li>Más complicadas pero a largo plazo compensa su aprendizaje por la potencia que ofrecen</li>
+                            </ul>
 						</aside>
 					</section>
 					<section data-transition="slide" data-background-transition="zoom">
@@ -521,8 +546,11 @@
 							</ul>
 							<aside class="notes">
 								<ul>
-									<li>SIEMPRE heredar del Abstractuser, nos permitirá olvidarnos del modelo Profile. Esto debe hacerse siempre en la creación del proyecto ya que la migración de el modelo de User es muy complicada.</li>
-									<li>Auth Views que ya nos viene de serie y permiten avanzar rápido en el proyecto sin perjuicio de una customización posterior.</li>
+									<li>SIEMPRE heredar del Abstractuser, nos permitirá olvidarnos del modelo Profile</li>
+                                    <li>Debe hacerse siempre en la creación del proyecto</li>
+                                    <li>Migración de el modelo de User es muy complicada, puede implicar recreación</li>
+									<li>Usar Auth Views: nos vienen de serie y permiten avanzar rápido en el proyecto sin perjuicio de una customización posterior.</li>
+                                    <li>Ejemplo en <a href="https://github.com/klashxx/PyConES2017/blob/master/web/sysgate/account/urls.py">repo</a></li>
 								</ul>
 							 </aside>
 						</section>
@@ -853,4 +881,3 @@
 
 	</body>
 </html>
-
