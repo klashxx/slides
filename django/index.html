@@ -439,6 +439,7 @@
                                 <li>Recorrerá las cinco regex que tenemos parametrizada en la raíz</li>
                                 <li>Solo cumple el primer patrón</li>
                                 <li>Carga urls.py de core que contempla cadena vacia y enrutaremos hacia la vista HOME de CORE</li>
+                                <li>Si no "machea" ningún patrón: ERROR</li>
                             </ul>
 						</aside>
 					</section>
@@ -648,7 +649,7 @@
                         </pre>
                         <pre>
                             <code data-trim data-noescape>
-                                http://0.0.0.0//metrics/api/v1/metricas/
+                                http://0.0.0.0/metrics/api/v1/metricas/
                             </code>
                         <pre>
 						<aside class="notes">
@@ -698,29 +699,30 @@
 						<h2>Frontend (Templating)</h2>
 						<pre>
 							<code data-trim data-noescape>
-							+-- account
-							+-- apps
-							¦   +-- core
-							¦   ¦   +-- templates
-							¦   ¦   ¦   +-- core
-							¦   ¦   ¦       +-- home.html
-							¦   ¦   +-- templatetags
-							¦   ¦   ¦   +-- core_tags.py
-							¦   +-- metrics
-							¦       +-- templates
-							¦       ¦   +-- metrics
-							¦       ¦       +-- home.html
-							+-- templates
-							¦   +-- account
-							¦   ¦   +-- login.html
-							¦   +-- base.html
+							├── account
+							├── apps
+							│   ├── core
+							│   │   ├── templates
+							│   │   │   └── core
+							│   │   │       └── home.html
+							│   │   ├── templatetags
+							│   │   │   └── core_tags.py
+							│   └── metrics
+							│       ├── templates
+							│       │   └── metrics
+							│       │       └── home.html
+							├── templates
+							│   ├── account
+							│   │   └── login.html
+							│   └── base.html
 							</code>
 						</pre>
 						<aside class="notes">
 					 		<ul>
 								 <li>Base del Frontend y la tercera pata del MVT: HTML + JS ,etc</li>
-								 <li>Muy inteligente, teniendo en cuenta que Django no esta enfocado a la construcción de single-page applications</li>
-								 <li>Cada app tendrá sus propios templates encargados de renderizar los datos proporcionados por la vista que invoca o extraídos directamente desde la API.</li>
+								 <li>Sistema muy inteligente y agíl</li>
+                                 <li>No orientado a la construcción de single-page applications</li>
+								 <li>Modular: Cada app tendrá sus propios templates</li>
 							</ul>
 						</aside>
 					</section>
@@ -735,9 +737,11 @@
 						</ul>
 						<aside class="notes">
 							<ul>
-								<li>La herencia (se podría comparar con las Clases) permite extender y modificar la plantilla heredada conelementos básicos y el look and feel de nuestra web. (DRY).</li>
-								<li>Sintaxis propia que nos permite expresarnos en el template de un modo programático proporcionándonos una enorme versatilidad.</li>
-								<li>Los tags y filtros nos permiten incorporar código Python y usarlo en plantillas</li>
+								<li>Herencia: se podría comparar con las clases python</li>
+                                <li>Permite extender y modificar la plantilla heredada</li>
+                                <li>Plantilla base: usualmente contiene elementos básicos y el look and feel de nuestra web. (DRY)</li>
+								<li>Lengaje: Sintaxis propia que nos permite expresarnos en el template de un modo programático proporcionándonos una enorme versatilidad</li>
+								<li>Los tags y filtros nos permiten invocar código Python desde nuestras plantillas</li>
 							</ul>
 						</aside>
 					</section>
@@ -770,6 +774,13 @@
 							{% endblock %}
 							</code>
 						</pre>
+						<aside class="notes">
+							<ul>
+                                <li>Ejemplo de tag: en core_tags</li>
+                                <li>Ejemplo de exteds: Herencia</li>
+                                <li>Ejemplo de sintaxis de lenguaje</li>
+							</ul>
+						</aside>
 					</section>
 					<section data-background="media/sunglasses.gif">
 						<h1 style="color:white;">CUTE!</h1>
@@ -794,8 +805,12 @@
 						</ul>
 						<aside class="notes">
 							<ul>
-								<li>Bootstrap es un framework web basado principalmente en HTML y CSS que mejora (o hace más vistosos) los elementos que incluimos en nuestros templates, además permite que nuestras paginas sean responsive sin demasiada dificultad (Sistema en grid)</li>
-								<li>Javascript es un lenguaje que tiene la gran ventaja de poder ejecutarse en el navegador. Existen innumerables librerías .js muchas de ellas super cool, que nos permiten hacer verdaderas viguerías con los datos devueltos por nuestro Backend, no debemos convertirnos en talibanes del lenguaje, JS es una utilidad imprescindible en el Frontend.</li>
+								<li>Bootstrap: es un framework web basado principalmente en HTML y CSS</li>
+                                <li>Mejora (o hace más vistoso) los elementos que incluimos en nuestros templates</li>
+                                <li>Permite que nuestras paginas sean responsive sin demasiada dificultad ni trabajo extra (Sistema en grid)</li>
+								<li>Javascript: es un lenguaje que tiene la gran ventaja de poder ejecutarse en el navegador.</li>
+                                <li>Existen innumerables librerías .js muchas de ellas super cool, que nos permiten hacer verdaderas viguerías con los datos devueltos por nuestro Backend</li>
+                                <li>No debemos convertirnos en talibanes del lenguaje, JS es una utilidad imprescindible en el Frontend.</li>
 							</ul>
 						</aside>
 					</section>
@@ -827,6 +842,12 @@
 							</table>
 							</code>
 						</pre>
+						<aside class="notes">
+							<ul>
+                                <li>Llamada AJAX al ENDPOINT: DRF</li>
+                                <li>Vue.js en la plantilla</li>
+							</ul>
+						</aside>
 					</section>
 				</section>
 
@@ -841,8 +862,14 @@
 							<br>
 							<li class="fragment" data-fragment-index="2">Serializers</li>
 						</ul>
+						<aside class="notes">
+							<ul>
+                                <li>Ejemplo templates: ya visto con los TAGs</li>
+							</ul>
+						</aside>
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+                        <h4>Vistas</h4>
 						<pre>
 							<code data-trim>
 							@method_decorator(login_required, name='dispatch')
@@ -856,6 +883,36 @@
 						</pre>
 						<pre>
 							<code data-trim>
+                            def super_o_esta_en_grupo(user, grupo):
+                                if user.is_superuser:
+                                    return True
+
+                                if user.groups.filter(name=grupo).exists():
+                                    return True
+
+                                return False
+							</code>
+						</pre>
+						<aside class="notes">
+							<ul>
+                                <li>Vista: Requerimo "logeo" y usario en grupo o super</li>
+                                <li>permissions.py: función común a todas las apps</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+                        <h4>Rest</h4>
+						<pre>
+							<code data-trim>
+                            from rest_framework.permissions import IsAuthenticated
+
+                            class MetricasViewSet(viewsets.ModelViewSet):
+                                grupos_autorizados = settings.GR_AUTH_METRICS
+                                permission_classes = (IsAuthenticated, EsSuperOTienePermisosPorGrupo,)
+							</code>
+						</pre>
+						<pre>
+							<code data-trim>
 							class EsSuperOTienePermisosPorGrupo(BasePermission):
 							    def has_permission(self, request, view):
 							    	gr_auth_map = getattr(view, 'grupos_autorizados', {})
@@ -864,6 +921,12 @@
 							    	            for grupo in gr_auth])
 							</code>
 						</pre>
+						<aside class="notes">
+							<ul>
+                                <li>ViewSet: Mismos requerimientos que en vista "simple"</li>
+                                <li>permissions.py: clase común a todas las apps</li>
+							</ul>
+						</aside>
 					</section>
 				</section>
 
