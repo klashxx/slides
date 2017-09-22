@@ -50,9 +50,15 @@
 				   <ul>
 					   <li>Estructurada en ramas</li>
 					   <li>Incremental</li>
-                       <li>Docker</li>
+                       <li>Git + Docker</li>
 				   </ul>
-
+					<aside class="notes">
+						<ul>
+							<li>ABRIR Github en otra pestaña</li>
+                            <li>ABRIR sysgate http://0.0.0.0</li>
+							<li>Instalación NO es necesaria, pero es un buen complemento</li>
+						</ul>
+					</aside>
 				</section>
 
 				<!-- Slide 02 (contact info) -->
@@ -68,7 +74,10 @@
 					<section data-background="media/web-experience.gif">
 					    <h1 style="color:white;">Web Experience = 0</h1>
 					    <aside class="notes">
-						Motivación ¿Voluntario?
+						    <ul>
+						    	<li>SOLO Jinja para mails, y experimentos en Flask</li>
+						    	<li>Voluntario, aprovechar la oportunidad para aprender</li>
+						    </ul>
 				        </aside>
 					</section>
 				</section>
@@ -94,8 +103,9 @@
 							<ul>
 								<li>Python: mejor lenguaje para administrar sistemas.</li>
 								<li>Fiable: GitHub Starts, comunidad, webs en producción.</li>
-								<li>ORM: modelos con persistencia</li>
-								<li>Extensible: acoplar nuevas apps aprovechando una infraestructura común (autenticación, plantillas, etc)</li>
+                                <li>Extensible: acoplar nuevas APPS aprovechando una infraestructura común (autenticación, plantillas, etc)</li>
+								<li>Object-Relational-;apping: modelos con persistencia</li>
+                                <li>Admin Site: para muchos motivo suficiente para usar Django</li>
 							</ul>
 						</aside>
 					</section>
@@ -110,9 +120,13 @@
 						<h2 style="color:#0C4B33;">First Fail</h2>
 						<h3>CMS</h3>
 						<aside class="notes">
-							<p>Awesome Django: Wagtail, Django-CMS, Mezzanine, etc: por debajo era magia negra para mi. Me imposibilitaba la adaptación a mis necesidades</p>
-							<p>Zen Django, que se mueve under the hood</p>
-							<p>Django girls y Mozilla</p>
+                            <ul>
+                                <li>CMS:  Content Management System = sistema de gestión de contenidos</li>
+                                <li>Awesome Django: Wagtail, Django-CMS, Mezzanine, etc</li>
+                                <li>Magia negra, "imposible" adaptación</li>
+                                <li>Zen Django: que se mueve under the hood</li>
+                                <li>Django girls y Mozilla</li>
+                            </ul>
 						</aside>
 					</section>
 					<section data-background="media/nerd.gif">
@@ -127,16 +141,19 @@
 						<ul>
 						    <li class="fragment" data-fragment-index="0">virtualenv</li>
 						    <br>
-						    <li class="fragment" data-fragment-index="1">Docker</li>
+						    <li class="fragment" data-fragment-index="1">Git + Docker</li>
 						    <br>
 						    <li class="fragment" data-fragment-index="2">docker-compose</li>
 						    <br>
 							<li class="fragment" data-fragment-index="3">Kubernetes - Docker-Swarm</li>
 						</ul>
 						<aside class="notes">
-							<p>virtualenv: evitaremos al menos romper cosas</p>
-							<p>Clonar un repositorio y lanzar un comando… ya tenemos nuestra web levantada con su *proxy-server* y su *BD* ¿no resulta mágico?</p>
-							<p>¡Pues esa es la idea! Dockerizar y simular el entorno productivo con compose</p>
+                            <ul>
+                                <li>virtualenv: intalación independiente, evitaremos romper nuestro sistema</li>
+                                <li>Git + Docker: Clonar un repo + lanzar un comando = site con web server y BD. ¿Magia?</li>
+                                <li>docker-compose: conjunto de dockers como servicio</li>
+                                <li>Kubernetes - Docker-Swarm: gran escala</li>
+                            </ul>
 						</aside>
 					</section>
 					<section data-background="media/whale.gif">
@@ -156,13 +173,18 @@
 						</ul>
 						<aside class="notes">
 							<ul>
-								<li>Primeros experimentos nos vale SQLite</li>
-								<li>Entornos productivos cualquiera de las otras tres opciones</li>
+								<li>Primeros experimentos:SQLite</li>
+								<li>Entornos productivos: cualquiera de las otras tres opciones es válida</li>
 							</ul>
-					     </aside>
+					    </aside>
 					</section>
 					<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
 						<h2>Go for PostgreSQL !</h1>
+						<aside class="notes">
+							<ul>
+								<li>Experiencia como DBA: PostgreSQL mejor alternativa Opensource</li>
+							</ul>
+					    </aside>
 					</section>
 				</section>
 
@@ -175,12 +197,13 @@
 						    <br>
 						    <li class="fragment" data-fragment-index="1">Ocultar los secretos</li>
 						    <br>
-						    <li class="fragment" data-fragment-index="2">Variables globales</li>
+						    <li class="fragment" data-fragment-index="2">Variables globales: django.conf.settings</li>
 						</ul>
 						<aside class="notes">
 							<ul>
-								<li>Configuración global de nuestro proyecto, similar a profile  bash</li>
-								<li>Crítico</li>
+								<li>settings.py: Crítico: Configuración global del proyecto, similar a PROFILE bash</li>
+								<li>Secretos: en .env NO VERSIONADO</li>
+                                <li>Glogales: varibles a usar en cualquier punto del código</li>
 							</ul>
 						</aside>
 					</section>
@@ -608,22 +631,22 @@
 						<h2>Frontend (Templating)</h2>
 						<pre>
 							<code data-trim data-noescape>
-							├── account
-							├── apps
-							│   ├── core
-							│   │   ├── templates
-							│   │   │   └── core
-							│   │   │       └── home.html
-							│   │   ├── templatetags
-							│   │   │   └── core_tags.py
-							│   └── metrics
-							│       ├── templates
-							│       │   └── metrics
-							│       │       └── home.html
-							├── templates
-							│   ├── account
-							│   │   └── login.html
-							│   └── base.html
+							+-- account
+							+-- apps
+							¦   +-- core
+							¦   ¦   +-- templates
+							¦   ¦   ¦   +-- core
+							¦   ¦   ¦       +-- home.html
+							¦   ¦   +-- templatetags
+							¦   ¦   ¦   +-- core_tags.py
+							¦   +-- metrics
+							¦       +-- templates
+							¦       ¦   +-- metrics
+							¦       ¦       +-- home.html
+							+-- templates
+							¦   +-- account
+							¦   ¦   +-- login.html
+							¦   +-- base.html
 							</code>
 						</pre>
 						<aside class="notes">
@@ -830,3 +853,4 @@
 
 	</body>
 </html>
+
