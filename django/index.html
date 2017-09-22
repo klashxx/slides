@@ -106,7 +106,7 @@
 							<ul>
 								<li>Python: mejor lenguaje para administrar sistemas.</li>
 								<li>Fiable: GitHub Starts, comunidad, webs en producción.</li>
-                                <li>Extensible: acoplar nuevas APPS aprovechando una infraestructura común (autenticación, plantillas, etc)</li>
+                                <li>Extensible: acoplar nuevas APPS aprovechando una infraestructura común (autenticación, plantillas, etc). No SPA</li>
 								<li>Object-Relational-;apping: modelos con persistencia</li>
                                 <li>Admin Site: para muchos motivo suficiente para usar Django</li>
 							</ul>
@@ -583,13 +583,20 @@
 							</code>
 						</pre>
 						<aside class="notes">
-							<p>Extraer un contexto en el views.py y enviársela al template para que renderizara los resultados.</p>
-							<p>Para páginas sencillas el resultado era el esperado pero la cosa se complica si tienes que representar miles de datos.</p>
+                            <ul>
+                                <li>Extrae datos mediante la Query API: NO SQL</li>
+                                <li>Datos en contexto enviado al template que renderizará los resultados</li>
+                                <li>OK para datos simples y limtados</li>
+                                <li>Millones de resultados: ¿Que pasa? Filtros, paginación</li>
+                            </ul>
 						</aside>
 					</section>
 					<section data-background-transition="zoom" data-background-image="media/backvsfront.png" data-background-size="500px" data-background-repeat="repeat">
 						<aside class="notes">
-							<p>La idea es simple, nuestro proyecto expondrá una API, en nuestro caso REST que será invocada directamente desde nuestras plantillas.</p>
+                            <ul>
+                                <li>Una ídea simple: nuestro proyecto expondrá una API, en nuestro caso REST</li>
+                                <li>ENDPOINTs REST: atacados directamente desde nuestras plantillas</li>
+                            </ul>
 						</aside>
 					</section>
 					<section>
@@ -617,39 +624,71 @@
 							  	return queryset
 							</code>
 						</pre>
-						<aside class="notes">
-							<p>Extraer un contexto en el views.py a partir del serializer y enviársela al template para que renderizara los resultados.</p>
-							<p>Para páginas sencillas el resultado era el esperado pero la cosa se complica si tienes que representar miles de datos.</p>
+                        <aside class="notes">
+                            <ul>
+                                <li>Serializador simple: todos los campos</li>
+                                <li>ViewSet: extrae el contexto y lo expone por el ENDPOINT</li>
+                            </ul>
 						</aside>
-						</section>
-						<section>
-							<h2>REST API</h2>
-							<pre>
-								<code data-trim data-noescape>
-								{
-									"nombre": "USERS",
-									"long_tipo": "Custom",
-									"tipo": "c",
-									"alta": "2017-08-13T10:21:19.015000Z",
-									"descripcion": "Return users ..."
-								},
-								{
-									"nombre": "READ",
-									"long_tipo": "Disk",
-									"tipo": "d",
-									"alta": "2017-08-13T10:15:09.516000Z",
-									"descripcion": "Number of reads"
-								}
-								</code>
-							</pre>
-							<aside class="notes">
-								<p>La tecnología trending es GraphQL y sin duda es el futuro, pero DRF es sin duda el mejor añadido a Django, y para ciertas querys resulta de difícil substitución, un caso claro es el de las métricas donde necesitamos todos los campos y de forma secuencial.</p>
-								<p>Al igual que ocurre con la separación de aplicaciones en la estructuración del proyecto, si separamos el Backend del Frontend podremos dividir el trabajo de forma más eficiente, además la API podrá ser integrada por otras aplicaciones por ejemplo móviles.</p>
-					 		</aside>
-						</section>
-						<section data-background="media/productivity.gif">
-							<h1 style="color:white;">PRODUCTIVITY BOOST INCREASED!</h1>
-						</section>
+					</section>
+                    <section>
+                        <h2>ENDPOINT</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+                            router = routers.SimpleRouter()
+                            router.register(r'metricas', views.MetricasViewSet, 'metricas')
+
+                            app_name = 'metrics'
+
+                            urlpatterns = [
+                                url(r'^$', views.Home.as_view(), name='home'),
+                                url(r'^api/v1/', include(router.urls)),
+                            ]
+                            </code>
+                        </pre>
+                        <pre>
+                            <code data-trim data-noescape>
+                                http://0.0.0.0//metrics/api/v1/metricas/
+                            </code>
+                        <pre>
+						<aside class="notes">
+                            <ul>
+                                <li>Generamos un ENDPOINT que recibe contexto proporcionado por DRF: ViewSet</li>
+                            </ul>
+						</aside>
+					</section>
+					<section>
+						<h2>REST API: Resultado</h2>
+						<pre>
+							<code data-trim data-noescape>
+							{
+								"nombre": "USERS",
+								"long_tipo": "Custom",
+								"tipo": "c",
+								"alta": "2017-08-13T10:21:19.015000Z",
+								"descripcion": "Return users ..."
+							},
+							{
+								"nombre": "READ",
+								"long_tipo": "Disk",
+								"tipo": "d",
+								"alta": "2017-08-13T10:15:09.516000Z",
+								"descripcion": "Number of reads"
+							}
+							</code>
+						</pre>
+						<aside class="notes">
+                            <ul>
+                                <li>GraphQL: tecnología trending y el futuro</li>
+                                <li>DRF: mejor complemento de Django</li>
+                                <li>Estable y para ciertas querys resulta de difícil substitución: Millones de datos secuenciales y estructurados</li>
+                                <li>Análogamente a la división por apps: Separamos Backend del Frontend</li>
+                                <li>Inpedendizar el trabajo de los desarrolladores</li>
+                            </ul>
+						</aside>
+					</section>
+					<section data-background="media/productivity.gif">
+						<h1 style="color:white;">PRODUCTIVITY BOOST INCREASED!</h1>
 					</section>
 				</section>
 
