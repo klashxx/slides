@@ -699,22 +699,22 @@
 						<h2>Frontend (Templating)</h2>
 						<pre>
 							<code data-trim data-noescape>
-							├── account
-							├── apps
-							│   ├── core
-							│   │   ├── templates
-							│   │   │   └── core
-							│   │   │       └── home.html
-							│   │   ├── templatetags
-							│   │   │   └── core_tags.py
-							│   └── metrics
-							│       ├── templates
-							│       │   └── metrics
-							│       │       └── home.html
-							├── templates
-							│   ├── account
-							│   │   └── login.html
-							│   └── base.html
+							+-- account
+							+-- apps
+							¦   +-- core
+							¦   ¦   +-- templates
+							¦   ¦   ¦   +-- core
+							¦   ¦   ¦       +-- home.html
+							¦   ¦   +-- templatetags
+							¦   ¦   ¦   +-- core_tags.py
+							¦   +-- metrics
+							¦       +-- templates
+							¦       ¦   +-- metrics
+							¦       ¦       +-- home.html
+							+-- templates
+							¦   +-- account
+							¦   ¦   +-- login.html
+							¦   +-- base.html
 							</code>
 						</pre>
 						<aside class="notes">
@@ -934,23 +934,31 @@
 				<section>
 					<h2>Deploy</h2>
 						<ul>
-							<li class="fragment" data-fragment-index="0">NGINX</li>
+							<li class="fragment" data-fragment-index="0">Webserver: NGINX</li>
 							<br>
-							<li class="fragment" data-fragment-index="1">Gunicorn</li>
+							<li class="fragment" data-fragment-index="1">WSGI: Gunicorn</li>
 							<br>
-							<li class="fragment" data-fragment-index="2">Docker</li>
+							<li class="fragment" data-fragment-index="2">Distribución: Docker</li>
 					</ul>
 					<aside class="notes">
 						<ul>
-							<li>NGINX se encargará de se servir el contenido estático y mediante un proxyserver redireccionará las peticiones de contenido dinámico a la url servida por el servidor WSGI</li>
-							<li>Necesitamos un servidor Python que será el que mueva nuestro código, mi elegido es Gunicorn</li>
+                            <li>Preferencia personal!</li>
+							<li>Servidor WEB: contenido estático</li>
+                            <li>Proxyserver: redireccionará las peticiones de contenido dinámico a la url servida por el servidor WSGI</li>
+							<li>WSGI: Código Python, mi elegido es Gunicorn</li>
+                            <li>Docker: Bloqueo de dependencias, rapidez</li>
 						</ul>
 					</aside>
 				</section>
 
-				<!-- Slide  -->
+				<!-- Slide 17 (bye-bye) -->
 				<section data-background="media/bye.gif">
 					<h1 style="color:white;">¡Muchas Gracias!</h1>
+					<aside class="notes">
+						<ul>
+                            <li>Contacto: Url en la agenda de la PyConES</li>
+						</ul>
+					</aside>
 				</section>
 
 			</div>
