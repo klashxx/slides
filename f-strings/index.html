@@ -1,0 +1,1036 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>F-Strings</title>
+
+	<link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="media/favicon.ico" type="image/x-icon">
+
+	<meta name="description" content="F-Strings">
+	<meta name="author" content="Juan Diego Godoy Robles">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/dracula.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!-- Slide 00 (title) -->
+			<section>
+				<h1>F-Strings</h1>
+				<h2><i>A format system to rule them all</i></h2>
+				<h3>PyConES, Octubre 2019, Alicante</h3>
+			</section>
+
+			<!-- Slide 01 (demo ref) -->
+			<section>
+				<h2>Pruébalo</h2>
+				<p><a href="https://github.com/klashxx/PyConES2019"
+						style="font-family:courier;">https://github.com/klashxx/PyConES2019</a></p>
+				<ul>
+					<li>Estructurada en ramas</li>
+					<li>Incremental</li>
+					<li>Git + Docker</li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li>Buenos dias! Gracias por el madrugón!</li>
+						<li>ABRIR <strong>Github</strong> en otra pestaña</li>
+						<li>ABRIR <strong>sysgate</strong>: <a href="http://0.0.0.0">http://0.0.0.0</a></li>
+						<li>Instalación NO es necesaria, pero es un buen complemento</li>
+					</ul>
+				</aside>
+			</section>
+
+			<!-- Slide 02 (contact info) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">Autobombo</h2>
+					<ul>
+						<li>Sysadmin since 2004</li>
+						<li>Python desde 2012</li>
+						<li>Primer programa Amstrad CPC6128</li>
+					</ul>
+					<p><a href="https://klashxx.github.io/about"
+							style="font-family:courier;">https://klashxx.github.io/about</a></p>
+				</section>
+				<section data-background="media/web-experience.gif">
+					<h1 style="color:white;">Web Experience = 0</h1>
+					<aside class="notes">
+						<ul>
+							<li>SOLO Jinja para mails, y experimentos en Flask</li>
+							<li>Voluntario, aprovechar la oportunidad para aprender</li>
+							<li>Objetivo: <strong>compartir mi experiencia</strong>, lo que me sirvió y lo que no</li>
+							<li><strong>NO TUTORIAL</strong></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<!-- Slide 03 (why Django?) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">¿Por qué Django?</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Python</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Fiable</li>
+						<br>
+						<li class="fragment" data-fragment-index="2">ORM</li>
+						<br>
+						<li class="fragment" data-fragment-index="3">Extensible</li>
+						<br>
+						<li class="fragment" data-fragment-index="4">DRF y otras hierbas</li>
+						<br>
+						<li class="fragment" data-fragment-index="5">Admin Site</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li><strong>Python</strong>: mejor lenguaje para administrar sistemas.</li>
+							<li><strong>Fiable</strong>: GitHub Starts, comunidad, webs en producción.</li>
+							<li>Extensible: acoplar nuevas APPS aprovechando una infraestructura común (autenticación,
+								plantillas, etc). <strong>No SPA</strong></li>
+							<li><strong>Object_Relational_Mapping</strong>: modelos con persistencia</li>
+							<li><strong>Admin Site</strong>: para muchos motivo suficiente para usar Django</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-background="media/win.gif">
+					<h1 style="color:white;">Win or Win</h1>
+				</section>
+			</section>
+
+			<!-- Slide 04 (first fail) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">First Fail</h2>
+					<h3>CMS</h3>
+					<aside class="notes">
+						<ul>
+							<li><strong>CMS</strong>: Content Management System = sistema de gestión de contenidos</li>
+							<li><strong>Awesome Django</strong>: Wagtail, Django-CMS, Mezzanine, etc</li>
+							<li><strong>Magia negra</strong>, "imposible" adaptación</li>
+							<li>Zen Django: que se mueve under the hood. Deshacer lo hecho y empezar de 0</li>
+							<li><strong>Django girls y Mozilla</strong></li>
+						</ul>
+					</aside>
+				</section>
+				<section data-background="media/nerd.gif">
+					<h1 style="color:white;">Empezar por los basics</h1>
+				</section>
+			</section>
+
+			<!-- Slide 05 (dev env) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">Desarrollo</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">virtualenv</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Git + Docker</li>
+						<br>
+						<li class="fragment" data-fragment-index="2">docker-compose</li>
+						<br>
+						<li class="fragment" data-fragment-index="3">Kubernetes - Docker-Swarm</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li><strong>virtualenv</strong>: intalación independiente, evitaremos romper nuestro sistema
+							</li>
+							<li><strong>Git + Docker</strong>: Clonar un repo + lanzar un comando = site con web server
+								y BD. ¿Magia?</li>
+							<li><strong>docker-compose</strong>: conjunto de dockers como servicio</li>
+							<li><strong>Kubernetes - Docker-Swarm</strong>: gran escala</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-background="media/whale.gif">
+					<h1 style="color:white;">Docker es amor!</h1>
+				</section>
+			</section>
+
+			<!-- Slide 06 (databases) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">Databases</h2>
+					<ul>
+						<li>PostgreSQL</li>
+						<li>MySQL</li>
+						<li>SQLite</li>
+						<li>Oracle</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Primeros <strong>experimentos</strong>:SQLite</li>
+							<li>Entornos <strong>productivos</strong>: cualquiera de las otras tres opciones es válida
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h2>Go for PostgreSQL !</h1>
+						<aside class="notes">
+							<ul>
+								<li><strong>Experiencia</strong> como DBA: PostgreSQL mejor alternativa Opensource</li>
+							</ul>
+						</aside>
+				</section>
+			</section>
+
+			<!-- Slide 07 (conf) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33; text-transform: lowercase;">settings.py &amp; .env</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Configuración</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Ocultar los secretos</li>
+						<br>
+						<li class="fragment" data-fragment-index="2">Variables globales: django.conf.settings</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li><strong>settings.py</strong>: Crítico: Configuración global del proyecto, similar a
+								PROFILE bash</li>
+							<li>Secretos: en <strong>.env NO VERSIONADO</strong></li>
+							<li><strong>Globales</strong>: variables a usar en cualquier punto del código</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h3>Decouple</h3>
+					<h6>.env</h6>
+					<pre>
+							<code data-trim data-noescape>
+							SECRET_KEY=#^p^js0g91jhtarws6bp7s@r&988%%n_ok6#b)q=3s1v8-(si$
+							</code>
+						</pre>
+					<h6>settings.py</h6>
+					<pre>
+							<code data-trim data-noescape>
+							from decouple import config
+							SECRET_KEY = config('SECRET_KEY')
+							</code>
+						</pre>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h3>DJ DATABASE URL</h3>
+					<h6>.env</h6>
+					<pre>
+							<code data-trim data-noescape>
+								DB_URL=postgresql://postgres:postgres@postgres:5432/postgres
+							</code>
+						</pre>
+					<h6>settings.py</h6>
+					<pre>
+							<code data-trim data-noescape>
+								DATABASES = {
+								'default': dj_database_url.config(default=config('DB_URL')),
+								}
+							</code>
+						</pre>
+				</section>
+			</section>
+
+			<!-- Slide 08 (second fail) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">Second Fail</h2>
+					<h3>La estructura del proyecto</h3>
+				</section>
+				<section data-transition="slide" data-background-transition="zoom">
+					<h3>DOCS</h3>
+					<pre>
+							<code data-trim>
+							mysite/
+							    manage.py
+							    mysite/
+							    	__init__.py
+							    	settings.py
+							    	urls.py
+							    	wsgi.py
+							    polls/
+							    	__init__.py
+							    	admin.py
+							    	migrations/
+							    		__init__.py
+							    		0001_initial.py
+							    	models.py
+							    	static/
+							    		polls/
+							    			images/
+							    				background.gif
+							    			style.css
+							    	templates/
+							    		polls/
+							    			detail.html
+							    			index.html
+							    			results.html
+							    	tests.py
+							    	urls.py
+							    	views.py
+							    templates/
+							    	admin/
+							    		base_site.html
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li>SYSGATE (repo): <strong>dos apliciones</strong></li>
+							<li><strong>account</strong>: Gestión de la autenticación (usuarios y grupos)</li>
+							<li><strong>metrics</strong>: La aplicación en sí</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background-transition="zoom">
+					<h3>First try</h3>
+					<pre>
+							<code data-trim>
+							sysgate/
+							    manage.py
+							    sysgate/
+							    	__init__.py
+							    	settings.py
+							    	urls.py
+							    	wsgi.py
+							    account/
+							    	__init__.py
+							    	…
+							    metrics/
+							    	__init__.py
+							    	…
+							    templates/
+							    	account/
+							    		login.html
+							    	metrics/
+							    		home.html
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li>Problema: Añadir una <strong>nueva aplicación</strong> "manager" y mantener HOME común
+							</li>
+							<li><strong>Dashboard compartido</strong> con Apps disponibles en función de permisos</li>
+							<li>¿En account?: <strong>no</strong>, se trata de <strong>separar funcionalidades</strong>
+								y esta aplicación tiene un propósito único especifico que es la gestión de usuarios.
+							</li>
+							<li>¿En metrics?: <strong>no</strong> way, implica <strong>duplicar el código</strong> en
+								"manager", o lo que es peor usar una vista de metrics</li>
+							<li><strong>Solución</strong>: app <strong>CORE</strong>, donde agrupar
+								funcionalidades/utilidades comunes</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h3>F*CK YEAH</h3>
+					<pre>
+							<code data-trim>
+                            sysgate/
+                                manage.py
+                                sysgate/
+                                    __init__.py
+                                    settings.py
+                                    urls.py
+                                    wsgi.py
+                                    routers.py
+                                    account/
+                                        __init__.py
+                                        ...
+                                    apps/
+                                        __init__.py
+                                        core/
+                                            templatetags/
+                                                __init__.py
+                                                core_tags.py
+                                            templates/
+                                                core/
+                                                    home.html
+                                                    ...
+                                            __init__.py
+                                            ...
+                                        metrics/
+                                            templates/
+                                                metrics/
+                                                    home.html
+                                                    ...
+                                            __init__.py
+                                            ...
+                                        manager/
+                                            templates/
+                                                manager/
+                                                    home.html
+                                                    ...
+                                            __init__.py
+                                            ...
+                                    static/
+                                        ...
+                                    fixtures/
+                                        ...
+                                    templates/
+                                        account/
+                                            login.html
+                                            ...
+                                        base.html
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li>La vista <strong>HOME</strong> (dashboard) se renderizará a partir de la
+								<strong>plantilla de CORE</strong> ¿make sense?</li>
+							<li>Ventaja: <strong>Añadir aplicaciones</strong> de forma indefinida aprovechando la
+								infraestructura común expuesta por ACCOUNT y CORE.</li>
+							<li>Ventaja: Permite <strong>trabajar independientemente</strong> en cualquier app sin temor
+								a romper nada</li>
+							<li>Ventaja: Incremento de la <strong>productividad</strong></li>
+						</ul>
+					</aside>
+				</section>
+				<section data-background="media/productivity.gif">
+					<h1 style="color:white;">PRODUCTIVITY BOOST</h1>
+				</section>
+			</section>
+
+			<!-- Slide 09 (urls.py) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33; text-transform: lowercase;">urls.py</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Regexp</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Modular</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Basado en <strong>expresiones regulares</strong>: uno de los puntos fuertes de Django
+							</li>
+							<li><strong>Llamada a URL</strong>: Primer paso = urls.py de la <strong>raíz</strong> del
+								proyecto</li>
+							<li>Segundo paso: urls.py de app. <strong>Modular</strong></li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h6>root</h6>
+					<pre>
+							<code data-trim data-noescape>
+							urlpatterns = [
+								url(r'^', include('apps.core.urls', namespace='core')),
+								url(r'^account/', include('account.urls'), name='Autenticación'),
+								url(r'^metrics/', include('apps.metrics.urls'), name='Métricas'),
+								url(r'^manager/', include('apps.manager.urls'), name='Manager'),
+								url(r'^admin/', admin.site.urls),
+								]
+							</code>
+						</pre>
+					<h6>core</h6>
+					<pre>
+							<code data-trim data-noescape>
+							urlpatterns = [
+								url(r'^$', views.Home.as_view(), name='home'),
+								]
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li>Introducimos <strong>solo dominio</strong>: <a href="http://0.0.0.0">http://0.0.0.0</a>
+							</li>
+							<li>Recorrerá las cinco regex que tenemos parametrizada en la raíz</li>
+							<li><strong>Solo</strong> cumple el primer patrón</li>
+							<li>Carga urls.py de core que contempla <strong>cadena</strong> vacía y enrutaremos hacia la
+								<strong>vista HOME de CORE</strong></li>
+							<li>Si <strong>no "machea"</strong> ningún patrón: <strong>ERROR</strong></li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h2>BE MODULAR MY FRIEND</h1>
+				</section>
+			</section>
+
+			<!-- Slide 10 (models and views) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">Modelos y vistas …¿Dónde está el controlador?</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Framework «MTV». «Model», «Template» y «View»</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>En la práctica: TRES elementos</li>
+							<li>Diseñar los modelos</li>
+							<li>Programar las vistas</li>
+							<li>Templating</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background-transition="zoom">
+					<h2 style="color:#0C4B33; text-transform: lowercase;">models.py</h2>
+					<ul>
+						<li>Clase cuyos objetos instanciados están dotados de persistencia en BD</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>En <strong>BD</strong>: tabla cuyos campos se mapean con las variables de la Clase</li>
+							<li>Pensar detenidamente en los datos que se desean representar</li>
+							<li><strong>Evitar alterarlos</strong>: complicaciones en <strong>migraciones</strong></li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h2>TIPS</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">managed = False</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Primary Key única</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li><strong>Por defecto crea las tablas</strong> mediante las migrations</li>
+							<li>managed=False lo evita: <strong>incorpora tablas externas para explotarlas</strong> en
+								modo lectura</li>
+							<li>Problemas con PKs múltiples. Usar <strong>GUID</strong></li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background-transition="zoom">
+					<h2 style="color:#0C4B33; text-transform: lowercase;">views.py</h2>
+					<ul>
+						<li>Extraer datos de nuestros Modelos</li>
+						<li>NO necesitamos SQL</li>
+					</ul>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h2>TIPS</h2>
+					<ul>
+						<li>Class Based Views</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Son el <strong>futuro</strong> / presente</li>
+							<li>Más complicadas pero a largo plazo compensa su aprendizaje por la potencia que ofrecen
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background-transition="zoom">
+					<h2 style="color:#0C4B33; text-transform: lowercase;">template.html</h2>
+					<ul>
+						<li>Representa los datos extraidos por la vista</li>
+					</ul>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<pre>
+						    <code data-trim>
+								<h1>Metrics App</h1>
+								<p>Bienvenid@ <strong>{{ request.user }}</strong></p>
+								<p>Disponibles:</p>
+								<table style="border: 1px solid black;">
+								{% for metrica in metricas %}
+								  <tr>
+									<td>{{ metrica.nombre }}</td>
+									<td>{{ metrica.get_tipo_display }}</td>
+								  </tr>
+								{% endfor %}
+								</table>
+						    </code>
+					    </pre>
+				</section>
+			</section>
+
+			<!-- Slide 11 (auth) -->
+			<section>
+				<section>
+					<h2 style="color:#0C4B33;">Autenticación y registro</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">AbstractUser</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Auth views</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li><strong>SIEMPRE heredar del Abstractuser</strong>, nos permitirá olvidarnos del modelo
+								Profile</li>
+							<li>Debe hacerse siempre en el <strong>inicio del proyecto</strong></li>
+							<li><strong>Migración</strong> de el modelo de User es muy <strong>complicada</strong>,
+								puede implicar recreación</li>
+							<li>Usar <strong>Auth Views</strong>: nos vienen de serie y permiten avanzar rápido en el
+								proyecto sin perjuicio de una customización posterior.</li>
+							<li>Ejemplo en <a
+									href="https://github.com/klashxx/PyConES2017/blob/master/web/sysgate/account/urls.py">repo</a>
+							</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<!-- Slide 12 (drf) -->
+			<section>
+				<section>
+					<h2>DRF</h2>
+					<h4>First try</h4>
+					<pre>
+							<code data-trim data-noescape>
+							class Home(View):
+								def get(self, request, *args, **kwargs):
+								  metricas = Metrica.objects.all().order_by('tipo')
+								  return render(
+									  request,
+									  'metrics/home.html',
+									  context={'metricas': metricas})
+							</code>
+						</pre>
+					<pre>
+                        	<code data-trim data-noescape>
+							   {% for metrica in metricas %}
+							   <tr>
+							      <td>{{ metrica.nombre }}</td>
+							      <td>{{ metrica.get_tipo_display }}</td>
+							   </tr>
+					    	   {% endfor %}
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li>Extrae datos mediante la Query API: <strong>NO SQL</strong></li>
+							<li><strong>Contexto enviado al template</strong> que renderizará los resultados</li>
+							<li>OK para datos simples y limitados</li>
+							<li>Millones de resultados: ¿Qué pasa? Filtros, paginación</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-background-transition="zoom" data-background-image="media/backvsfront.png"
+					data-background-size="500px" data-background-repeat="repeat">
+					<aside class="notes">
+						<ul>
+							<li>Una ídea simple: nuestro <strong>proyecto expondrá una API</strong>, en nuestro caso
+								<strong>REST</strong></li>
+							<li><strong>ENDPOINTs</strong> REST: <strong>atacados</strong> directamente
+								<strong>desde</strong> nuestras <strong>plantillas</strong></li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h2>Serializando ...</h2>
+					<pre>
+							<code data-trim data-noescape>
+							class SerializerMetricas(serializers.ModelSerializer):
+							    class Meta:
+							        model = Metrica
+							        fields = '__all__'
+							</code>
+						</pre>
+					<pre>
+							<code data-trim data-noescape>
+							class MetricasViewSet(viewsets.ModelViewSet):
+							  serializer_class = SerializerMetricas
+							  http_method_names = ['get']
+							  filter_backends = (OrderingFilter, SearchFilter,)
+							  search_fields = ('tipo',)
+							  def get_queryset(self):
+							  	queryset = Metrica.objects.all().order_by('tipo')
+							  	tipo = self.request.query_params.get('tipo', None)
+							  	if tipo is not None:
+							  		queryset = queryset.filter(tipo=tipo)
+							  	return queryset
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li><strong>Serializador</strong>: simple, todos los campos</li>
+							<li><strong>ViewSet</strong>: extrae el contexto y lo expone por el ENDPOINT</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h2>ENDPOINT</h2>
+					<pre>
+                            <code data-trim data-noescape>
+                            router = routers.SimpleRouter()
+                            router.register(r'metricas', views.MetricasViewSet, 'metricas')
+
+                            app_name = 'metrics'
+
+                            urlpatterns = [
+                                url(r'^$', views.Home.as_view(), name='home'),
+                                url(r'^api/v1/', include(router.urls)),
+                            ]
+                            </code>
+                        </pre>
+					<pre>
+                            <code data-trim data-noescape>
+                                http://0.0.0.0/metrics/api/v1/metricas/
+                            </code>
+                        <pre>
+						<aside class="notes">
+                            <ul>
+                                <li>Generamos un ENDPOINT que recibe contexto proporcionado por DRF: ViewSet</li>
+                            </ul>
+						</aside>
+					</section>
+					<section>
+						<h2>REST API: Resultado</h2>
+						<pre>
+							<code data-trim data-noescape>
+							{
+								"nombre": "USERS",
+								"long_tipo": "Custom",
+								"tipo": "c",
+								"alta": "2017-08-13T10:21:19.015000Z",
+								"descripcion": "Return users ..."
+							},
+							{
+								"nombre": "READ",
+								"long_tipo": "Disk",
+								"tipo": "d",
+								"alta": "2017-08-13T10:15:09.516000Z",
+								"descripcion": "Number of reads"
+							}
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li><strong>GraphQL</strong>: tecnología trending y el futuro</li>
+							<li><strong>DRF</strong>: mejor complemento de Django</li>
+							<li>Estable y para ciertas querys resulta de difícil substitución: Millones de datos
+								secuenciales y estructurados</li>
+							<li>Análogamente a la división por apps: <strong>Separamos Backend del Frontend</strong>
+							</li>
+							<li><strong>Independizar</strong> el trabajo de los desarrolladores</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-background="media/productivity.gif">
+					<h1 style="color:white;">PRODUCTIVITY BOOST INCREASED!</h1>
+				</section>
+			</section>
+
+			<!-- Slide 13 (frontend) -->
+			<section>
+				<section>
+					<h2>Frontend (Templating)</h2>
+					<pre>
+							<code data-trim data-noescape>
+							+-- account
+							+-- apps
+							¦   +-- core
+							¦   ¦   +-- templates
+							¦   ¦   ¦   +-- core
+							¦   ¦   ¦       +-- home.html
+							¦   ¦   +-- templatetags
+							¦   ¦   ¦   +-- core_tags.py
+							¦   +-- metrics
+							¦       +-- templates
+							¦       ¦   +-- metrics
+							¦       ¦       +-- home.html
+							+-- templates
+							¦   +-- account
+							¦   ¦   +-- login.html
+							¦   +-- base.html
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li><strong>Base del Frontend</strong> y la tercera pata del MVT: HTML + JS ,etc</li>
+							<li>Sistema muy inteligente y agíl</li>
+							<li><strong>NO</strong> orientado a la construcción de single-page applications</li>
+							<li><strong>Modular</strong>: Cada app tendrá sus propios templates</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<h2>Conceptos</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Herencia</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Lenguaje</li>
+						<br>
+						<li class="fragment" data-fragment-index="2">Custom Tags y Filtros</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li><strong>Herencia</strong>: se podría comparar con las clases Python</li>
+							<li>Permite <strong>extender y modificar</strong> la plantilla heredada</li>
+							<li><strong>Plantilla base</strong>: usualmente contiene elementos básicos y el look and
+								feel de nuestra web. (DRY)</li>
+							<li><strong>Lenguaje</strong>: Sintaxis propia que nos permite expresarnos en el template de
+								un modo programático proporcionándonos una enorme versatilidad</li>
+							<li><strong>Tags y filtros</strong> nos permiten invocar código Python desde nuestras
+								plantillas</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<pre>
+							<code data-trim data-noescape>
+							from django import template
+							register = template.Library()
+
+							@register.filter('en_grupo')
+							def en_grupo(user, group_name):
+								groups = user.groups.all().values_list('name', flat=True)
+								return True if group_name in groups else False
+							</code>
+						</pre>
+					<pre>
+							<code data-trim>
+							{% extends 'base.html' %}
+							{% load core_tags %}
+							{% block content %}
+
+							{% if request.user|en_grupo:"pycones" or user.is_superuser %}
+								<h1>Metrics</h1>
+								<a class="btn" href="{% url 'metrics:home' %}">Acceder</a>
+							{% endif %}
+
+							{% if not user.is_authenticated %}
+							    <button type="button" class="close"></button>Longin
+							{% endif %}
+							{% endblock %}
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li>Ejemplo de tag: en core_tags</li>
+							<li>Ejemplo de exteds: Herencia</li>
+							<li>Ejemplo de sintaxis de lenguaje</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-background="media/sunglasses.gif">
+					<h1 style="color:white;">CUTE!</h1>
+				</section>
+			</section>
+
+			<!-- Slide 14 (bootstrap / js) -->
+			<section>
+				<section>
+					<h2>Y esto ...</h2>
+					<h2>¿cómo se ve en el móvil?</h2>
+				</section>
+				<section data-background="media/olakase.gif">
+					<h1 style="color:white;">¿OLA K ASE?</h1>
+				</section>
+				<section>
+					<h2>Mejorando el FRONTEND</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Bootstrap</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Javascript</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li><strong>Bootstrap</strong>: es un framework web basado principalmente en HTML y CSS</li>
+							<li>Mejora (o hace más vistoso) los elementos que incluimos en nuestros templates</li>
+							<li>Permite que nuestras paginas sean responsive sin demasiada dificultad ni trabajo extra
+								(Sistema en grid)</li>
+							<li><strong>Javascript</strong>: es un lenguaje que tiene la gran ventaja de poder
+								ejecutarse en el navegador.</li>
+							<li>Existen innumerables librerías .js muchas de ellas super cool, que nos permiten hacer
+								verdaderas viguerías con los datos devueltos por nuestro Backend</li>
+							<li>No debemos convertirnos en talibanes del lenguaje, JS es una utilidad imprescindible en
+								el Frontend.</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<pre>
+							<code data-trim>
+							var v = new Vue({
+							  delimiters: ['[[', ']]'],
+							  el: '#container',
+							  data: {
+								metricas: []
+							  },
+							  mounted: function(){
+								$.get('/metrics/api/v1/metricas/', function(data){
+								  v.metricas = data;
+								})}
+							})
+							</code>
+						</pre>
+					<pre>
+							<code data-trim>
+							<table>
+							  <tbody>
+								<tr v-for="metrica in metricas">
+								  <td>[[ metrica.nombre ]]</td>
+								  <td>[[ metrica.long_tipo ]]</td>
+								</tr>
+							  </tbody>
+							</table>
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li>Llamada <strong>AJAX</strong> al ENDPOINT: DRF</li>
+							<li><strong>Vue.js</strong> en la plantilla</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<!-- Slide 15 (permissions) -->
+			<section>
+				<section>
+					<h2>Permisos</h2>
+					<ul>
+						<li class="fragment" data-fragment-index="0">Templates</li>
+						<br>
+						<li class="fragment" data-fragment-index="1">Views</li>
+						<br>
+						<li class="fragment" data-fragment-index="2">Serializers</li>
+					</ul>
+					<aside class="notes">
+						<ul>
+							<li>Ejemplo templates: ya visto con los TAGs</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h4>Vistas</h4>
+					<pre>
+							<code data-trim>
+							@method_decorator(login_required, name='dispatch')
+							class Home(UserPassesTestMixin, View):
+								def test_func(self):
+									return super_o_esta_en_grupo(self.request.user,
+																 grupo='pycones')
+								def get(self, request, *args, **kwargs):
+									return render(request, 'metrics/home.html')
+							</code>
+						</pre>
+					<pre>
+							<code data-trim>
+                            def super_o_esta_en_grupo(user, grupo):
+                                if user.is_superuser:
+                                    return True
+
+                                if user.groups.filter(name=grupo).exists():
+                                    return True
+
+                                return False
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li><strong>Vista</strong>: Requerimos "logeo" y usario en grupo o super</li>
+							<li><strong>permissions.py</strong>: función común a todas las apps (en CORE)</li>
+						</ul>
+					</aside>
+				</section>
+				<section data-transition="slide" data-background="#0C4B33" data-background-transition="zoom">
+					<h4>Rest</h4>
+					<pre>
+							<code data-trim>
+                            from rest_framework.permissions import IsAuthenticated
+
+                            class MetricasViewSet(viewsets.ModelViewSet):
+                                grupos_autorizados = settings.GR_AUTH_METRICS
+                                permission_classes = (IsAuthenticated, EsSuperOTienePermisosPorGrupo,)
+							</code>
+						</pre>
+					<pre>
+							<code data-trim>
+							class EsSuperOTienePermisosPorGrupo(BasePermission):
+							    def has_permission(self, request, view):
+							    	gr_auth_map = getattr(view, 'grupos_autorizados', {})
+							    	gr_auth = gr_auth_map.get(request.method, [])
+							    	return any([super_o_esta_en_grupo(request.user, grupo)
+							    	            for grupo in gr_auth])
+							</code>
+						</pre>
+					<aside class="notes">
+						<ul>
+							<li><strong>ViewSet</strong>: Mismos requerimientos que en vista "simple"</li>
+							<li><strong>permissions.py</strong>: clase común a todas las apps (en CORE)</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+
+			<!-- Slide 16 (deploy) -->
+			<section>
+				<h2>Deploy</h2>
+				<ul>
+					<li class="fragment" data-fragment-index="0">Webserver: NGINX</li>
+					<br>
+					<li class="fragment" data-fragment-index="1">WSGI: Gunicorn</li>
+					<br>
+					<li class="fragment" data-fragment-index="2">Distribución: Docker</li>
+				</ul>
+				<aside class="notes">
+					<ul>
+						<li>Preferencia personal!</li>
+						<li><strong>Servidor WEB</strong>: no nos sirve manage.py, debe ocuparse del contenido estático
+						</li>
+						<li>Proxyserver: redireccionará las peticiones de contenido dinámico a la url servida por el
+							servidor WSGI</li>
+						<li><strong>WSGI</strong>: Código Python, mi elegido es Gunicorn</li>
+						<li><strong>Docker</strong>: Bloqueo de dependencias, rapidez</li>
+					</ul>
+				</aside>
+			</section>
+
+			<!-- Slide 17 (bye-bye) -->
+			<section data-background="media/bye.gif">
+				<h1 style="color:white;">¡Muchas Gracias!</h1>
+				<aside class="notes">
+					<ul>
+						<li><a href="https://klashxx.github.io/about">Contacto</a>: URL en la agenda de la PyConES</li>
+					</ul>
+				</aside>
+			</section>
+
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		Reveal.initialize({
+			controls: true,
+			progress: true,
+			history: true,
+			center: true,
+
+			transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+			// More info https://github.com/hakimel/reveal.js#dependencies
+			dependencies: [
+				{ src: 'lib/js/classList.js', condition: function () { return !document.body.classList; } },
+				{ src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+				{ src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+				{ src: 'plugin/zoom-js/zoom.js', async: true },
+				{ src: 'plugin/notes/notes.js', async: true }
+			]
+		});
+
+	</script>
+
+</body>
+
+</html>
